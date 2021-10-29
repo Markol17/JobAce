@@ -26,3 +26,4 @@ expo start --web
 - React Native (Expo)
 - Firebase
 - TypeScript
+v
