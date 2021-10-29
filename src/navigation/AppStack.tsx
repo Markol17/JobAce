@@ -1,14 +1,28 @@
 import * as React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import { Ionicons } from "@expo/vector-icons";
 
 import { HomeScreen } from "../screens";
+import { AppBarTab } from ".";
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export const AppStack = () => {
 	return (
-		<Stack.Navigator>
-			<Stack.Screen name='Home' component={HomeScreen} />
-		</Stack.Navigator>
+		<Tab.Navigator
+			screenOptions={{
+				headerShown: false,
+			}}
+			tabBar={(props) => <AppBarTab {...props} />}>
+			<Tab.Screen
+				name='Home'
+				component={HomeScreen}
+				options={{
+					tabBarIcon: ({ color, size }) => <Ionicons name='md-checkmark-circle' size={size} color={color} />,
+					tabBarBadge: 3,
+				}}
+			/>
+		</Tab.Navigator>
 	);
 };

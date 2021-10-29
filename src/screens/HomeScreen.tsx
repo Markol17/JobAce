@@ -24,6 +24,7 @@ export const HomeScreen = () => {
 				backgroundColor={"#F5FCFF"}
 				cardVerticalMargin={2}
 				cardHorizontalMargin={2}
+				marginBottom={20}
 				stackSize={3}></Swiper>
 		</View>
 	);
@@ -32,13 +33,12 @@ export const HomeScreen = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#F5FCFF",
 	},
 	card: {
 		flex: 1,
 		borderRadius: 4,
 		borderWidth: 1,
-		borderColor: "#E8E8E8",
+		borderColor: "grey",
 		justifyContent: "center",
 		backgroundColor: "white",
 	},
