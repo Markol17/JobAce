@@ -22,23 +22,39 @@ import { useNavigation } from "@react-navigation/native";
 export const LoginScreen = (props: any) => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
+  const [emailIsValid, setEmailIsValid] = useState(false);
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [passwordIsValid, setPasswordIsValid] = useState(false);
+  const [error, setError] = useState("");
   
 
   const emailChangeHandler = (text: string) => {
-    setEmail(text);
+    console.log(text)
+      if (text.length === 0) {
+          setEmailIsValid(false);
+      } else {
+          setEmailIsValid(true);
+      }
+      setEmail(text);
   };
 
   const passwordChangeHandler = (text: string) => {
+    console.log(text)
+    if (text.length < 6) {
+      setPasswordIsValid(false);
+    } else {
+      setPasswordIsValid(true);
+    }
     setPassword(text);
   };
 
-  const login = async (email: string, password: string) => {
+
+  const login = async () => {
     auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       console.log("user info: ", user)
+      navigation.navigate('Home')
     })
     .catch((error) => {
       const errorCode = error.code
@@ -49,11 +65,19 @@ export const LoginScreen = (props: any) => {
 
   }
 
+  const loginHandler = async () => {
+    if (emailIsValid === false || passwordIsValid === false) {
+      setError("The email is invalid or the password is less than 6 characters")
+    } else {
+      login();
+    }
+  }
+
   useEffect(() => {
     if (error) {
       Alert.alert("Login Failed", error, [{ text: "Okay" }]);
     }
-    setError(null);
+    setError("");
   }, [error]);
      
 
@@ -72,61 +96,29 @@ export const LoginScreen = (props: any) => {
               </Text>
             </TouchableOpacity>
           </View>
-
-        <FloatingLabelInput
-          id="email"
-          textContentType="emailAddress"
-          label="Email address"
-          value={emailText}
-          ref={emailInput}
-          required
-          maxLength={35}
-          autoCapitalize="none"
-          keyboardType="email-address"
-          returnKeyType="next"
-          errorText="Please enter a valid email address"
-          onChangeText={emailChangeHandler}
-          onSubmitEditing={() => {
-            passwordInput.current.focus();
-          }}
-        />
-        <FloatingLabelInput
-          id="password"
-          textContentType="password"
-          label="Password (8+ characters)"
-          value={passwordText}
-          ref={passwordInput}
-          isPassword
-          togglePassword={show}
-          required
-          maxLength={30}
-          autoCapitalize="none"
-          keyboardType="default"
-          returnKeyType="next"
-          errorText="Please enter a valid password"
-          customShowPasswordImage={showPassword}
-          customHidePasswordImage={hidePassword}
-          onChangeText={passwordChangeHandler}
-          onSubmitEditing={() => {
-            birthdayInput.current.focus();
-          }}
-        />
-       
-
-
-        {/* Display a loading animation when user account is being created */}
-        <TouchableHighlight
-          activeOpacity={1}
-          underlayColor="rgba(0,0,0,0.7)"
-          style={styles.btnBG}
-          onPress={signUpHandler}
-        >
-          {isLoading ? (
-            <ActivityIndicator size="small" color="white" />
-          ) : (
-            <Text style={styles.btnText}>Log in</Text>
-          )}
-        </TouchableHighlight>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Email"
+              value={email}
+              onChangeText={text => emailChangeHandler(text)}
+              style={styles.input}
+            />
+              <TextInput
+              placeholder="Password"
+              value={password}
+              onChangeText={text => passwordChangeHandler(text)}
+              secureTextEntry={true}
+              style={styles.input}
+            />
+          </View>
+          <TouchableHighlight
+            activeOpacity={1}
+            underlayColor="rgba(0,0,0,0.7)"
+            style={styles.btnBG}
+            onPress={loginHandler}
+          >
+              <Text style={styles.btnText}>Log in</Text>
+          </TouchableHighlight>
         </ScrollView>
       </SafeAreaView>
     )
@@ -136,6 +128,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "#665aad",
+
   },
   header: {
     flexDirection: "row",
@@ -153,8 +146,22 @@ const styles = StyleSheet.create({
     marginTop: 20,
     justifyContent: "space-between",
   },
+  input: {
+    backgroundColor: 'white',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+
+  },
+  inputContainer: {
+    width: '80%',
+    justifyContent: 'center',
+  },
+
   container: {
     paddingHorizontal: 15,
+   
   },
   title: {
     fontSize: 24,
