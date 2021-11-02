@@ -24,6 +24,8 @@ export const HomeScreen = () => {
 				backgroundColor={"#F5FCFF"}
 				cardVerticalMargin={2}
 				cardHorizontalMargin={2}
+				infinite
+				stackSeparation={2}
 				stackSize={3}></Swiper>
 		</View>
 	);
