@@ -1,11 +1,17 @@
+import { Button } from "native-base";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import Swiper from "react-native-deck-swiper";
+import { auth } from "../config";
 
 export const HomeScreen = () => {
+	const handleSignOut = () => {
+		auth.signOut();
+	};
 	return (
 		<View style={styles.container}>
-			<Swiper
+			<Button onPress={handleSignOut}>Sign out</Button>
+			{/* <Swiper
 				cards={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
 				renderCard={(card) => {
 					return (
@@ -26,7 +32,7 @@ export const HomeScreen = () => {
 				cardHorizontalMargin={2}
 				infinite
 				stackSeparation={2}
-				stackSize={3}></Swiper>
+				stackSize={3}></Swiper> */}
 		</View>
 	);
 };

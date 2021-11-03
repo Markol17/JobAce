@@ -1,219 +1,190 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../config";
-import { Box, Button, FormControl, Heading, Input, VStack } from "native-base";
+import { Box, Button, FormControl, Heading, HStack, Input, VStack, WarningOutlineIcon, Text, Link } from "native-base";
+import { AntDesign } from "@expo/vector-icons";
+import { signUpSchema } from "../utils";
+import { Formik } from "formik";
 
 export const SignUpScreen = (props: any) => {
-	const [email, setEmail] = useState("");
-	const [emailIsValid, setEmailIsValid] = useState(false);
-	const [password, setPassword] = useState("");
-	const [passwordIsValid, setPasswordIsValid] = useState(false);
-	const [error, setError] = useState("");
 	const navigation = useNavigation();
-	const [show, setShow] = useState(false);
 
-	const emailChangeHandler = (text: string) => {
-		console.log(text);
-		if (text.length === 0) {
-			setEmailIsValid(false);
-		} else {
-			setEmailIsValid(true);
-		}
-		setEmail(text);
+	const handleSignInRedirection = () => {
+		//@ts-ignore
+		navigation.navigate("Login");
 	};
 
-	const passwordChangeHandler = (text: string) => {
-		console.log(text);
-		if (text.length < 6) {
-			setPasswordIsValid(false);
-		} else {
-			setPasswordIsValid(true);
-		}
-		setPassword(text);
+	const handleBack = () => {
+		navigation.goBack();
 	};
-
-	const signup = async () => {
-		console.log("email:", email);
-		console.log("password:", password);
-		auth
-			.createUserWithEmailAndPassword(email, password)
-			.then((userCredential) => {
-				const user = userCredential.user;
-				console.log("user info: ", user);
-				navigation.navigate("Login");
-			})
-			.catch((error) => {
-				const errorCode = error.code;
-				const errorMessage = error.message;
-				console.log(errorCode, errorMessage);
-				setError(error);
-			});
-	};
-	const signUpHandler = async () => {
-		if (emailIsValid === false || passwordIsValid === false) {
-			setError("The email is invalid or the password is less than 6 characters");
-		} else {
-			signup();
-		}
-	};
-
-	useEffect(() => {
-		if (error) {
-			// Alert.alert("Sign Up Failed", error, [{ text: "Okay" }]);
-		}
-		setError("");
-	}, [error]);
 
 	return (
-		<Box safeArea flex={1} p='2' w='90%' mx='auto' py='8'>
-			<Heading size='lg' color='coolGray.800' fontWeight='600'>
-				Welcome
-			</Heading>
-			<Heading mt='1' color='coolGray.600' fontWeight='medium' size='xs'>
-				Sign up to continue!
-			</Heading>
-
-			<VStack space={3} mt='5'>
-				<FormControl>
-					<FormControl.Label _text={{ color: "muted.700", fontSize: "xs", fontWeight: 500 }}>Email</FormControl.Label>
-					<Input />
-				</FormControl>
-				<FormControl>
-					<FormControl.Label _text={{ color: "muted.700", fontSize: "xs", fontWeight: 500 }}>
-						Password
-					</FormControl.Label>
-					<Input type='password' />
-				</FormControl>
-				<FormControl>
-					<FormControl.Label _text={{ color: "muted.700", fontSize: "xs", fontWeight: 500 }}>
-						Confirm Password
-					</FormControl.Label>
-					<Input type='password' />
-				</FormControl>
-				<Button mt='2' colorScheme='indigo' _text={{ color: "white" }}>
-					Sign up
-				</Button>
-			</VStack>
+		<Box bg='#1a202c' h='100%'>
+			<Box safeArea flex={1} p='2' py='8' w='90%' mx='auto'>
+				<Heading size='lg' color='teal.400' fontWeight='bold' marginBottom={4}>
+					<Button variant='ghost' colorScheme='teal' onPress={handleBack} marginRight={4}>
+						<AntDesign name='back' size={28} color='white' />
+					</Button>
+					Sign Up
+				</Heading>
+				<Box h='100%' flex={1}>
+					<Formik
+						initialValues={{ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" }}
+						validationSchema={signUpSchema}
+						onSubmit={async (values) => {
+							auth.createUserWithEmailAndPassword(values.email, values.password);
+						}}>
+						{({
+							handleChange,
+							handleBlur,
+							handleSubmit,
+							values,
+							errors,
+							isSubmitting,
+						}: {
+							handleChange: any;
+							handleBlur: any;
+							handleSubmit: any;
+							values: any;
+							errors: any;
+							isSubmitting: any;
+						}) => (
+							<VStack space={3} mt='5'>
+								<FormControl isRequired isInvalid={!!errors.firstName}>
+									<FormControl.Label
+										_text={{
+											color: "white",
+											fontSize: "lg",
+											fontWeight: "semibold",
+										}}>
+										First Name
+									</FormControl.Label>
+									<Input
+										placeholder={"First Name"}
+										size='lg'
+										onChangeText={handleChange("firstName")}
+										onBlur={handleBlur("firstName")}
+										value={values.firstName}
+									/>
+									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+										{errors.firstName}
+									</FormControl.ErrorMessage>
+								</FormControl>
+								<FormControl isRequired isInvalid={!!errors.lastName}>
+									<FormControl.Label
+										_text={{
+											color: "white",
+											fontSize: "lg",
+											fontWeight: "semibold",
+										}}>
+										Last Name
+									</FormControl.Label>
+									<Input
+										placeholder={"Last Name"}
+										size='lg'
+										onChangeText={handleChange("lastName")}
+										onBlur={handleBlur("lastName")}
+										value={values.lastName}
+									/>
+									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+										{errors.lastName}
+									</FormControl.ErrorMessage>
+								</FormControl>
+								<FormControl isRequired isInvalid={!!errors.email}>
+									<FormControl.Label
+										_text={{
+											color: "white",
+											fontSize: "lg",
+											fontWeight: "semibold",
+										}}>
+										Email
+									</FormControl.Label>
+									<Input
+										placeholder={"Email"}
+										size='lg'
+										onChangeText={handleChange("email")}
+										onBlur={handleBlur("email")}
+										value={values.email}
+									/>
+									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+										{errors.email}
+									</FormControl.ErrorMessage>
+								</FormControl>
+								<FormControl isRequired isInvalid={!!errors.password}>
+									<FormControl.Label
+										_text={{
+											color: "white",
+											fontSize: "lg",
+											fontWeight: "semibold",
+										}}>
+										Password
+									</FormControl.Label>
+									<Input
+										type='password'
+										placeholder={"Password"}
+										size='lg'
+										onChangeText={handleChange("password")}
+										onBlur={handleBlur("password")}
+										value={values.password}
+									/>
+									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+										{errors.password}
+									</FormControl.ErrorMessage>
+								</FormControl>
+								<FormControl isRequired isInvalid={!!errors.confirmPassword}>
+									<FormControl.Label
+										_text={{
+											color: "white",
+											fontSize: "lg",
+											fontWeight: "semibold",
+										}}>
+										Confirm Password
+									</FormControl.Label>
+									<Input
+										type='password'
+										placeholder={"Confirm Password"}
+										size='lg'
+										onChangeText={handleChange("confirmPassword")}
+										onBlur={handleBlur("confirmPassword")}
+										value={values.confirmPassword}
+									/>
+									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+										{errors.confirmPassword}
+									</FormControl.ErrorMessage>
+								</FormControl>
+								<Button
+									mt='4'
+									isLoading={isSubmitting}
+									isLoadingText='Submitting'
+									onPress={handleSubmit}
+									fontWeight='bold'
+									p={3}
+									style={{ borderRadius: 30 }}
+									fontSize={34}
+									colorScheme='teal'
+									_text={{ color: "white" }}>
+									Sign Up
+								</Button>
+								<HStack mt='6' justifyContent='center'>
+									<Text fontSize='md' color='white' fontWeight={400}>
+										I already have an account.{" "}
+									</Text>
+									<Link
+										_text={{
+											color: "teal.400",
+											fontWeight: "medium",
+											fontSize: "sm",
+										}}
+										onPress={handleSignInRedirection}
+										href='#'>
+										Sign In
+									</Link>
+								</HStack>
+							</VStack>
+						)}
+					</Formik>
+				</Box>
+			</Box>
 		</Box>
-		// <SafeAreaView style={styles.screen}>
-		//   <StatusBar barStyle="dark-content" animated={true} />
-		//     <ScrollView style={styles.container}>
-		//       <View style={styles.innerHeader}>
-		//         <Text style={styles.title}>Sign Up</Text>
-		//         <TouchableOpacity activeOpacity={0.5}>
-		//           <Text
-		//             style={styles.login}
-		//             onPress={() => navigation.navigate("Login")}
-		//           >
-		//             Log in
-		//           </Text>
-		//         </TouchableOpacity>
-		//       </View>
-		//       <View style={styles.inputContainer}>
-		//     <TextInput
-		//       placeholder="Email"
-		//       value={email}
-		//       onChangeText={text => emailChangeHandler(text)}
-		//       style={styles.input}
-		//     />
-		//       <TextInput
-		//       placeholder="Password"
-		//       onChangeText={text => passwordChangeHandler(text)}
-		//       value={password}
-		//       secureTextEntry={true}
-		//       style={styles.input}
-		//     />
-		//   </View>
-
-		//        <TouchableHighlight
-		//         activeOpacity={1}
-		//         underlayColor="rgba(0,0,0,0.7)"
-		//         style={styles.btnBG}
-		//         onPress={signUpHandler}
-		//       >
-		//           <Text style={styles.btnText}>Create Account</Text>
-		//       </TouchableHighlight>
-
-		//   </ScrollView>
-		// </SafeAreaView>
 	);
 };
-
-// const styles = StyleSheet.create({
-// 	screen: {
-// 		flex: 1,
-// 		backgroundColor: "#665aad",
-// 	},
-// 	header: {
-// 		flexDirection: "row",
-// 		paddingRight: 10,
-// 		alignItems: "center",
-// 		justifyContent: "flex-end",
-// 		borderBottomWidth: 0.75,
-// 		borderBottomColor: "#E8D7CC",
-// 		backgroundColor: "#665aad",
-// 	},
-// 	input: {
-// 		backgroundColor: "white",
-// 		paddingHorizontal: 15,
-// 		paddingVertical: 10,
-// 		borderRadius: 10,
-// 		marginTop: 5,
-// 		marginBottom: 5,
-// 	},
-// 	inputContainer: {
-// 		width: "80%",
-// 		justifyContent: "center",
-// 	},
-
-// 	innerHeader: {
-// 		flexDirection: "row",
-// 		alignItems: "center",
-// 		marginVertical: 5,
-// 		marginTop: 20,
-// 		justifyContent: "space-between",
-// 	},
-// 	container: {
-// 		paddingHorizontal: 15,
-// 	},
-// 	title: {
-// 		fontSize: 24,
-// 		fontWeight: "700",
-// 	},
-// 	subtitle: {
-// 		marginBottom: 15,
-// 	},
-// 	chevron: {
-// 		paddingTop: 8,
-// 		paddingRight: 10,
-// 		alignItems: "center",
-// 	},
-// 	btnBG: {
-// 		backgroundColor: "rgba(0,0,0,0.9)",
-// 		padding: 10,
-// 		paddingLeft: 60,
-// 		paddingRight: 60,
-// 		borderRadius: 30,
-// 		minWidth: 300,
-// 		marginBottom: 25,
-// 		borderWidth: 2,
-// 	},
-// 	btnText: {
-// 		textAlign: "center",
-// 		color: "#fff",
-// 		fontSize: 20,
-// 		fontWeight: "700",
-// 	},
-// 	login: {
-// 		alignItems: "center",
-// 		color: "#ffffff",
-// 		fontWeight: "700",
-// 		// marginHorizontal: 5,
-// 		// marginVertical: 10,
-// 		fontSize: 20,
-// 	},
-// 	disclaimerLink: {
-// 		color: "#C83E6F",
-// 		textDecorationLine: "underline",
-// 	},
-// });

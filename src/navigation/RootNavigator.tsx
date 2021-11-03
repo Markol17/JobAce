@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthStack } from "./AuthStack";
 import { AuthContext, SET_USER } from "../contexts";
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config";
 import { Text } from "react-native";
 import { AppTabs } from "./AppTabs";
@@ -13,7 +12,7 @@ export const RootNavigator = () => {
 
 	useEffect(() => {
 		// onAuthStateChanged returns an unsubscriber
-		const unsubscribeAuthStateChanged = onAuthStateChanged(auth, (authenticatedUser: any) => {
+		const unsubscribeAuthStateChanged = auth.onAuthStateChanged((authenticatedUser: any) => {
 			authenticatedUser
 				? dispatch({ type: SET_USER, user: authenticatedUser })
 				: dispatch({ type: SET_USER, user: undefined });

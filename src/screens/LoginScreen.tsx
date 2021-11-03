@@ -1,23 +1,10 @@
 import React from "react";
 import { auth } from "../config/firebase";
 import { useNavigation } from "@react-navigation/native";
-import {
-	Box,
-	Text,
-	FormControl,
-	Heading,
-	HStack,
-	Input,
-	Link,
-	VStack,
-	Button,
-	WarningOutlineIcon,
-	Flex,
-} from "native-base";
+import { Box, Text, FormControl, Heading, HStack, Input, Link, VStack, Button, WarningOutlineIcon } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { Formik } from "formik";
-import { loginSchema } from "../utils";
-import { AuthContext } from "../contexts";
+import { signInSchema } from "../utils";
 
 export const LoginScreen = (props: any) => {
 	const navigation = useNavigation();
@@ -34,29 +21,19 @@ export const LoginScreen = (props: any) => {
 	return (
 		<Box bg='#1a202c' h='100%'>
 			<Box safeArea flex={1} p='2' py='8' w='90%' mx='auto'>
-				<Flex h='200px' flexDirection={"row"}>
+				<Heading size='lg' color='teal.400' fontWeight='bold'>
 					<Button h='18%' variant='ghost' colorScheme='teal' onPress={handleBack} marginRight={4}>
 						<AntDesign name='back' size={28} color='white' />
 					</Button>
-					<Heading size='lg' color='teal.400' fontWeight='bold'>
-						Sign in
-					</Heading>
-				</Flex>
+					Sign In
+				</Heading>
 				<Box h='100%' flex={1}>
 					<Formik
 						initialValues={{ email: "", password: "" }}
-						validationSchema={loginSchema}
-						onSubmit={(values) =>
-							auth
-								.signInWithEmailAndPassword(values.email, values.password)
-								.then((userCredential) => {
-									const user = userCredential.user;
-								})
-								.catch((error) => {
-									const errorCode = error.code;
-									const errorMessage = error.message;
-								})
-						}>
+						validationSchema={signInSchema}
+						onSubmit={async (values) => {
+							const user = await auth.signInWithEmailAndPassword(values.email, values.password);
+						}}>
 						{({
 							handleChange,
 							handleBlur,
@@ -126,11 +103,12 @@ export const LoginScreen = (props: any) => {
 									isLoadingText='Submitting'
 									onPress={handleSubmit}
 									fontWeight='bold'
-									style={{ borderRadius: 30, padding: 12 }}
-									fontSize={34}
+									p={3}
+									style={{ borderRadius: 30 }}
+									fontSize={"7xl"}
 									colorScheme='teal'
 									_text={{ color: "white" }}>
-									Sign in
+									Sign In
 								</Button>
 								<HStack mt='6' justifyContent='center'>
 									<Text fontSize='md' color='white' fontWeight={400}>
