@@ -1,38 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { auth } from "../config/firebase";
 import { useNavigation } from "@react-navigation/native";
-import { Box, Text, FormControl, Heading, HStack, Input, Link, VStack, Button } from "native-base";
+import {
+	Box,
+	Text,
+	FormControl,
+	Heading,
+	HStack,
+	Input,
+	Link,
+	VStack,
+	Button,
+	WarningOutlineIcon,
+	Flex,
+} from "native-base";
+import { AntDesign } from "@expo/vector-icons";
 import { Formik } from "formik";
-import * as Yup from "yup";
+import { loginSchema } from "../utils";
+import { AuthContext } from "../contexts";
 
 export const LoginScreen = (props: any) => {
 	const navigation = useNavigation();
 
-	const login = async () => {
-		auth
-			.signInWithEmailAndPassword(email, password)
-			.then((userCredential) => {
-				const user = userCredential.user;
-				console.log("user info: ", user);
-				navigation.navigate("Home");
-			})
-			.catch((error) => {
-				const errorCode = error.code;
-				const errorMessage = error.message;
-			});
+	const handleSignUpRedirection = () => {
+		//@ts-ignore
+		navigation.navigate("SignUp");
 	};
 
-	const loginSchema = Yup.object().shape({
-		email: Yup.string().required("Email is required"),
-		password: Yup.string().required("Password is required"),
-	});
+	const handleBack = () => {
+		navigation.goBack();
+	};
 
 	return (
 		<Box bg='#1a202c' h='100%'>
 			<Box safeArea flex={1} p='2' py='8' w='90%' mx='auto'>
-				<Heading size='lg' color='teal.400' fontWeight='bold'>
-					Sign in
-				</Heading>
+				<Flex h='200px' flexDirection={"row"}>
+					<Button h='18%' variant='ghost' colorScheme='teal' onPress={handleBack} marginRight={4}>
+						<AntDesign name='back' size={28} color='white' />
+					</Button>
+					<Heading size='lg' color='teal.400' fontWeight='bold'>
+						Sign in
+					</Heading>
+				</Flex>
 				<Box h='100%' flex={1}>
 					<Formik
 						initialValues={{ email: "", password: "" }}
@@ -42,8 +51,6 @@ export const LoginScreen = (props: any) => {
 								.signInWithEmailAndPassword(values.email, values.password)
 								.then((userCredential) => {
 									const user = userCredential.user;
-									console.log("user info: ", user);
-									navigation.navigate("Home");
 								})
 								.catch((error) => {
 									const errorCode = error.code;
@@ -55,14 +62,18 @@ export const LoginScreen = (props: any) => {
 							handleBlur,
 							handleSubmit,
 							values,
+							errors,
+							isSubmitting,
 						}: {
 							handleChange: any;
 							handleBlur: any;
 							handleSubmit: any;
 							values: any;
+							errors: any;
+							isSubmitting: any;
 						}) => (
 							<VStack space={3} mt='5'>
-								<FormControl isRequired>
+								<FormControl isRequired isInvalid={!!errors.email}>
 									<FormControl.Label
 										_text={{
 											color: "white",
@@ -78,9 +89,11 @@ export const LoginScreen = (props: any) => {
 										onBlur={handleBlur("email")}
 										value={values.email}
 									/>
-									<FormControl.ErrorMessage>Test</FormControl.ErrorMessage>
+									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+										{errors.email}
+									</FormControl.ErrorMessage>
 								</FormControl>
-								<FormControl isRequired>
+								<FormControl isRequired isInvalid={!!errors.password}>
 									<FormControl.Label
 										_text={{
 											color: "white",
@@ -97,6 +110,9 @@ export const LoginScreen = (props: any) => {
 										onBlur={handleBlur("password")}
 										value={values.password}
 									/>
+									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+										{errors.password}
+									</FormControl.ErrorMessage>
 									<Link
 										_text={{ fontSize: "sm", fontWeight: "semibold", color: "teal.400" }}
 										alignSelf='flex-end'
@@ -104,7 +120,16 @@ export const LoginScreen = (props: any) => {
 										Forget Password?
 									</Link>
 								</FormControl>
-								<Button mt='4' onPress={handleSubmit} fontWeight='bold' colorScheme='teal' _text={{ color: "white" }}>
+								<Button
+									mt='4'
+									isLoading={isSubmitting}
+									isLoadingText='Submitting'
+									onPress={handleSubmit}
+									fontWeight='bold'
+									style={{ borderRadius: 30, padding: 12 }}
+									fontSize={34}
+									colorScheme='teal'
+									_text={{ color: "white" }}>
 									Sign in
 								</Button>
 								<HStack mt='6' justifyContent='center'>
@@ -117,6 +142,7 @@ export const LoginScreen = (props: any) => {
 											fontWeight: "medium",
 											fontSize: "sm",
 										}}
+										onPress={handleSignUpRedirection}
 										href='#'>
 										Sign Up
 									</Link>

@@ -1,4 +1,4 @@
-import { NativeBaseProvider, extendTheme } from "native-base";
+import { extendTheme } from "native-base";
 
 export const theme = extendTheme({
 	components: {

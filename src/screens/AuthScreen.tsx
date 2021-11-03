@@ -1,21 +1,19 @@
 import React from "react";
-import {
-	SafeAreaView,
-	StatusBar,
-	View,
-	TextInput,
-	Text,
-	Button,
-	StyleSheet,
-	TouchableOpacity,
-	TouchableHighlight,
-	Alert,
-	ActivityIndicator,
-} from "react-native";
+import { SafeAreaView, View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export const AuthScreen = (props: any) => {
 	const navigation = useNavigation();
+
+	const handleSignUp = () => {
+		//@ts-ignore
+		navigation.navigate("SignUp");
+	};
+
+	const handleLogin = () => {
+		//@ts-ignore
+		navigation.navigate("Login");
+	};
 
 	return (
 		<View style={styles.screen}>
@@ -28,14 +26,14 @@ export const AuthScreen = (props: any) => {
 						activeOpacity={1}
 						underlayColor='rgba(0,0,0,0.7)'
 						style={styles.signupBG}
-						onPress={() => navigation.navigate("SignUp")}>
+						onPress={handleSignUp}>
 						<Text style={styles.btnText}>Sign Up</Text>
 					</TouchableHighlight>
 					<TouchableHighlight
 						activeOpacity={1}
 						underlayColor='rgba(255,255,255,0.2)'
 						style={styles.loginBG}
-						onPress={() => navigation.navigate("Login")}>
+						onPress={handleLogin}>
 						<Text style={styles.btnText}>Login</Text>
 					</TouchableHighlight>
 				</View>

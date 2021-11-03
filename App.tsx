@@ -3,6 +3,7 @@ import { RootNavigator } from "./src/navigation";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { NativeBaseProvider } from "native-base";
+import { AuthContextProvider } from "./src/contexts";
 
 const fetchFonts = () => {
 	return Font.loadAsync({
@@ -26,7 +27,9 @@ export default function App() {
 
 	return (
 		<NativeBaseProvider>
-			<RootNavigator />
+			<AuthContextProvider>
+				<RootNavigator />
+			</AuthContextProvider>
 		</NativeBaseProvider>
 	);
 }
