@@ -4,7 +4,7 @@ import { AuthStack } from "./AuthStack";
 import { AuthContext, SET_USER } from "../contexts";
 import { auth } from "../config";
 import { Text } from "react-native";
-import { AppTabs } from "./AppTabs";
+import { JobSeekerAppTabs } from "./JobSeekerAppTabs";
 
 export const RootNavigator = () => {
 	const { user, dispatch } = useContext(AuthContext);
@@ -26,5 +26,5 @@ export const RootNavigator = () => {
 	if (isLoading) {
 		return <Text>loading...</Text>;
 	}
-	return <NavigationContainer>{user ? <AppTabs /> : <AuthStack />}</NavigationContainer>;
+	return <NavigationContainer>{user ? <JobSeekerAppTabs /> : <AuthStack />}</NavigationContainer>;
 };

@@ -1,13 +1,27 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { auth } from "../config";
-import { Box, Button, FormControl, Heading, HStack, Input, VStack, WarningOutlineIcon, Text, Link } from "native-base";
+import { auth } from "../../config";
+import {
+	Box,
+	Button,
+	FormControl,
+	Heading,
+	HStack,
+	Input,
+	VStack,
+	WarningOutlineIcon,
+	Text,
+	Link,
+	ScrollView,
+	useToast,
+} from "native-base";
 import { AntDesign } from "@expo/vector-icons";
-import { signUpSchema } from "../utils";
+import { signUpSchema } from "../../utils";
 import { Formik } from "formik";
 
-export const SignUpScreen = (props: any) => {
+export const JobSeekerSignUpScreen = (props: any) => {
 	const navigation = useNavigation();
+	const toast = useToast();
 
 	const handleSignInRedirection = () => {
 		//@ts-ignore
@@ -19,7 +33,7 @@ export const SignUpScreen = (props: any) => {
 	};
 
 	return (
-		<Box bg='#1a202c' h='100%'>
+		<ScrollView bg='#1a202c'>
 			<Box safeArea flex={1} p='2' py='8' w='90%' mx='auto'>
 				<Heading size='lg' color='teal.400' fontWeight='bold' marginBottom={4}>
 					<Button variant='ghost' colorScheme='teal' onPress={handleBack} marginRight={4}>
@@ -32,7 +46,23 @@ export const SignUpScreen = (props: any) => {
 						initialValues={{ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" }}
 						validationSchema={signUpSchema}
 						onSubmit={async (values) => {
-							auth.createUserWithEmailAndPassword(values.email, values.password);
+							const user = await auth.createUserWithEmailAndPassword(values.email, values.password).catch((error) => {
+								toast.show({
+									title: "Sign up failed",
+									status: "error",
+									description: error.message,
+									duration: 3000,
+								});
+							});
+							if (user) {
+								toast.show({
+									title: "Signed up successfully",
+									status: "success",
+									description: "Welcome to Shigoto!",
+									duration: 3000,
+								});
+							}
+							console.log(user);
 						}}>
 						{({
 							handleChange,
@@ -61,10 +91,15 @@ export const SignUpScreen = (props: any) => {
 									</FormControl.Label>
 									<Input
 										placeholder={"First Name"}
-										size='lg'
+										size='xl'
 										onChangeText={handleChange("firstName")}
 										onBlur={handleBlur("firstName")}
 										value={values.firstName}
+										color='white'
+										style={{ borderRadius: 10 }}
+										_focus={{
+											borderColor: "teal.400",
+										}}
 									/>
 									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
 										{errors.firstName}
@@ -81,10 +116,15 @@ export const SignUpScreen = (props: any) => {
 									</FormControl.Label>
 									<Input
 										placeholder={"Last Name"}
-										size='lg'
+										size='xl'
 										onChangeText={handleChange("lastName")}
 										onBlur={handleBlur("lastName")}
 										value={values.lastName}
+										color='white'
+										style={{ borderRadius: 10 }}
+										_focus={{
+											borderColor: "teal.400",
+										}}
 									/>
 									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
 										{errors.lastName}
@@ -101,10 +141,15 @@ export const SignUpScreen = (props: any) => {
 									</FormControl.Label>
 									<Input
 										placeholder={"Email"}
-										size='lg'
+										size='xl'
 										onChangeText={handleChange("email")}
 										onBlur={handleBlur("email")}
 										value={values.email}
+										color='white'
+										style={{ borderRadius: 10 }}
+										_focus={{
+											borderColor: "teal.400",
+										}}
 									/>
 									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
 										{errors.email}
@@ -122,10 +167,15 @@ export const SignUpScreen = (props: any) => {
 									<Input
 										type='password'
 										placeholder={"Password"}
-										size='lg'
+										size='xl'
 										onChangeText={handleChange("password")}
 										onBlur={handleBlur("password")}
 										value={values.password}
+										color='white'
+										style={{ borderRadius: 10 }}
+										_focus={{
+											borderColor: "teal.400",
+										}}
 									/>
 									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
 										{errors.password}
@@ -143,10 +193,15 @@ export const SignUpScreen = (props: any) => {
 									<Input
 										type='password'
 										placeholder={"Confirm Password"}
-										size='lg'
+										size='xl'
 										onChangeText={handleChange("confirmPassword")}
 										onBlur={handleBlur("confirmPassword")}
 										value={values.confirmPassword}
+										color='white'
+										style={{ borderRadius: 10 }}
+										_focus={{
+											borderColor: "teal.400",
+										}}
 									/>
 									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
 										{errors.confirmPassword}
@@ -157,12 +212,14 @@ export const SignUpScreen = (props: any) => {
 									isLoading={isSubmitting}
 									isLoadingText='Submitting'
 									onPress={handleSubmit}
-									fontWeight='bold'
 									p={3}
 									style={{ borderRadius: 30 }}
-									fontSize={34}
 									colorScheme='teal'
-									_text={{ color: "white" }}>
+									_text={{
+										color: "white",
+										fontWeight: "bold",
+										fontSize: "md",
+									}}>
 									Sign Up
 								</Button>
 								<HStack mt='6' justifyContent='center'>
@@ -185,6 +242,6 @@ export const SignUpScreen = (props: any) => {
 					</Formik>
 				</Box>
 			</Box>
-		</Box>
+		</ScrollView>
 	);
 };

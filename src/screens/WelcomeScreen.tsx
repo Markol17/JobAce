@@ -1,8 +1,9 @@
 import React from "react";
-import { SafeAreaView, View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import { SafeAreaView, Text, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Button, View } from "native-base";
 
-export const AuthScreen = (props: any) => {
+export const WelcomeScreen = (props: any) => {
 	const navigation = useNavigation();
 
 	const handleSignUp = () => {
@@ -22,20 +23,33 @@ export const AuthScreen = (props: any) => {
 					<Text style={styles.title}>Shigoto</Text>
 				</View>
 				<View style={styles.footer}>
-					<TouchableHighlight
-						activeOpacity={1}
-						underlayColor='rgba(0,0,0,0.7)'
-						style={styles.signupBG}
+					<Button
+						mb={2}
+						p={3}
+						style={{ borderRadius: 30, backgroundColor: "black", width: "90%" }}
+						_text={{
+							color: "black",
+							fontWeight: "bold",
+							fontSize: "lg",
+						}}
+						bg='transparent'
+						colorScheme='teal'
 						onPress={handleSignUp}>
-						<Text style={styles.btnText}>Sign Up</Text>
-					</TouchableHighlight>
-					<TouchableHighlight
-						activeOpacity={1}
-						underlayColor='rgba(255,255,255,0.2)'
-						style={styles.loginBG}
+						<Text style={styles.btnText}>I am a job seeker</Text>
+					</Button>
+					<Button
+						p={3}
+						style={{ borderRadius: 30, borderColor: "white", borderWidth: 2, width: "90%" }}
+						_text={{
+							color: "black",
+							fontWeight: "bold",
+							fontSize: "lg",
+						}}
+						bg='transparent'
+						colorScheme='teal'
 						onPress={handleLogin}>
-						<Text style={styles.btnText}>Login</Text>
-					</TouchableHighlight>
+						<Text style={styles.btnText}>I am an employer</Text>
+					</Button>
 				</View>
 			</SafeAreaView>
 		</View>
@@ -45,7 +59,7 @@ export const AuthScreen = (props: any) => {
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,
-		backgroundColor: "#2dd4bf",
+		backgroundColor: "#14b8a6",
 	},
 	container: {
 		flex: 1,
@@ -62,40 +76,15 @@ const styles = StyleSheet.create({
 		fontFamily: "Cocogoose",
 		color: "#fff",
 	},
-	subtitle: {
-		fontSize: 20,
-		textAlign: "center",
-		fontWeight: "300",
-		color: "#fff",
-		fontFamily: "Cocogoose",
-		marginTop: 15,
-		marginBottom: 15,
-		lineHeight: 35,
-	},
+
 	footer: {
 		alignItems: "center",
 	},
-	signupBG: {
-		backgroundColor: "rgba(0,0,0,0.9)",
-		padding: 10,
-		paddingLeft: 60,
-		paddingRight: 60,
-		borderRadius: 30,
-		minWidth: 300,
-		marginBottom: 10,
-		borderWidth: 2,
-	},
+
 	btnText: {
 		textAlign: "center",
 		color: "#fff",
 		fontSize: 20,
 		fontWeight: "700",
-	},
-	loginBG: {
-		borderWidth: 2,
-		borderColor: "#fff",
-		padding: 12,
-		borderRadius: 30,
-		minWidth: 300,
 	},
 });
