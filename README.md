@@ -1,6 +1,6 @@
-# Shigoto
+# JobAce
 
-Shigoto is an app for job seekers to discover jobs and employers to recruit talents combining the TikTok and Tinder experience.
+JobAce is an app for job seekers to discover jobs and employers to recruit talents combining the TikTok and Tinder experience.
 
 ## Getting Started
 
