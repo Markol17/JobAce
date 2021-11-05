@@ -32,7 +32,7 @@ export const LoginScreen = (props: any) => {
 	};
 
 	return (
-		<Box bg='#1a202c' h='100%'>
+		<Box bg='#283242' h='100%'>
 			<Box safeArea flex={1} p='2' py='8' w='90%' mx='auto'>
 				<Heading size='lg' color='teal.400' fontWeight='bold'>
 					<Button variant='ghost' colorScheme='teal' onPress={handleBack} marginRight={4}>

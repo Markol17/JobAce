@@ -1,4 +1,4 @@
 import { auth, database } from "./firebase";
-import { theme } from "./theme";
+import { config, theme } from "./NativeBase";
 
-export { theme, auth, database };
+export { theme, auth, database, config };

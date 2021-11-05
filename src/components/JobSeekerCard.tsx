@@ -1,4 +1,6 @@
-import { Box, Heading, Icon, AspectRatio, Image, Text, Center, HStack, Stack, NativeBaseProvider } from "native-base";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useNavigation } from "@react-navigation/core";
+import { Box, Heading, Image, Text, Stack, Badge, Pressable } from "native-base";
 import React from "react";
 
 interface JobSeekerCardProps {
@@ -6,57 +8,79 @@ interface JobSeekerCardProps {
 	lastName: string;
 	title: string;
 	picture: string;
+	bio: string;
+	skills: { color: string; name: string }[];
 }
 
 export const JobSeekerCard: React.FC<JobSeekerCardProps> = ({ ...props }) => {
-	const { firstName, lastName, title, picture } = props;
+	const navigation = useNavigation();
+	const tabBarHeight = useBottomTabBarHeight();
+	const { firstName, lastName, title, picture, bio, skills } = props;
+
+	const handleProfileClick = () => {
+		//@ts-ignore
+		navigation.navigate("Profile");
+	};
 	return (
-		<Box
-			rounded='lg'
-			overflow='hidden'
-			width='100%'
-			height='92%'
-			shadow={1}
-			_light={{ backgroundColor: "gray.50" }}
-			_dark={{ backgroundColor: "gray.700" }}>
-			<Box>
-				<AspectRatio>
-					<Image
-						source={{
-							uri: picture,
-						}}
-						alt='image'
-					/>
-				</AspectRatio>
+		// <Pressable onPress={handleProfileClick}>
+		<Box width='100%' height='100%'>
+			<Box width='100%' height='100%'>
+				<Image
+					source={{
+						uri: picture,
+					}}
+					size={"100%"}
+					alt='profile picture'
+					resizeMode={"cover"}
+				/>
 			</Box>
-			<Stack p='4' space={3}>
-				<Stack space={2}>
-					<Heading size='md' ml='-1'>
+			<Box
+				bg={{
+					linearGradient: {
+						colors: ["transparent", "black"],
+					},
+				}}
+				paddingTop={400}
+				width='100%'
+				position='absolute'
+				bottom={0}
+				paddingBottom={tabBarHeight + 20}>
+				<Stack space={3} p='4'>
+					<Heading size='xl' fontFamily='Comfortaa' color='white' fontWeight='bold'>
 						{firstName + " " + lastName}
 					</Heading>
-					<Text
-						fontSize='xs'
-						_light={{ color: "violet.500" }}
-						_dark={{ color: "violet.300" }}
-						fontWeight='500'
-						ml='-0.5'
-						mt='-1'>
+					<Text fontSize='md' fontFamily='Comfortaa' color='teal.500' fontWeight='semibold' mt='-3'>
 						{title}
 					</Text>
+					<Box flexDirection='row'>
+						{skills.map((skill) => {
+							return (
+								<Badge
+									marginRight={2}
+									borderRadius='10px'
+									borderColor={skill.color}
+									_text={{
+										color: skill.color,
+									}}
+									variant={"outline"}>
+									{skill.name}
+								</Badge>
+							);
+						})}
+					</Box>
+					<Text
+						isTruncated
+						noOfLines={2}
+						fontSize='sm'
+						fontFamily='Comfortaa'
+						color='gray.400'
+						fontWeight='bold'
+						mt='-1'>
+						{bio}
+					</Text>
 				</Stack>
-				<Text fontWeight='400'>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi
-					repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga
-					praesentium optio, eaque rerum! Provident similique accusantium nemo autem.
-				</Text>
-				<HStack alignItems='center' space={4} justifyContent='space-between'>
-					<HStack alignItems='center'>
-						<Text color='gray.500' fontWeight='400'>
-							5 mins ago
-						</Text>
-					</HStack>
-				</HStack>
-			</Stack>
+			</Box>
 		</Box>
+		// </Pressable>
 	);
 };

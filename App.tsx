@@ -4,10 +4,11 @@ import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { NativeBaseProvider } from "native-base";
 import { AuthContextProvider } from "./src/contexts";
+import { config, theme } from "./src/config";
 
 const fetchFonts = () => {
 	return Font.loadAsync({
-		Cocogoose: require("./assets/fonts/Cocogoose-Regular.ttf"),
+		Comfortaa: require("./assets/fonts/Comfortaa-VariableFont_wght.ttf"),
 	});
 };
 
@@ -26,7 +27,7 @@ export default function App() {
 	}
 
 	return (
-		<NativeBaseProvider>
+		<NativeBaseProvider config={config} theme={theme}>
 			<AuthContextProvider>
 				<RootNavigator />
 			</AuthContextProvider>

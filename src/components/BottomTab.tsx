@@ -12,6 +12,7 @@ export function BottomTab({ state, descriptors, navigation }: any) {
 						: options.title !== undefined
 						? options.title
 						: route.name;
+				// const icon = options.tabBarIcon;
 
 				const isFocused = state.index === index;
 
@@ -23,7 +24,6 @@ export function BottomTab({ state, descriptors, navigation }: any) {
 					});
 
 					if (!isFocused && !event.defaultPrevented) {
-						// The `merge: true` option makes sure that the params inside the tab screen are preserved
 						navigation.navigate({ name: route.name, merge: true });
 					}
 				};
@@ -43,13 +43,12 @@ export function BottomTab({ state, descriptors, navigation }: any) {
 						testID={options.tabBarTestID}
 						onPress={onPress}
 						onLongPress={onLongPress}
+						backgroundColor='transparent'
 						p={4}
 						style={{
 							flex: 1,
-							backgroundColor: "white",
-							borderRadius: 0,
 						}}>
-						<Text color={isFocused ? "teal.500" : "#222"} fontSize='md' fontWeight='bold'>
+						<Text color={isFocused ? "teal.500" : "white"} fontSize='md' fontWeight='bold'>
 							{label}
 						</Text>
 					</Button>

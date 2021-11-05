@@ -19,8 +19,9 @@ export const WelcomeScreen = (props: any) => {
 	return (
 		<View style={styles.screen}>
 			<SafeAreaView style={styles.container}>
-				<View style={styles.body}>
-					<Text style={styles.title}>Shigoto</Text>
+				<View style={styles.body} flexDirection='row' justifyContent='center'>
+					<Text style={styles.title}>Job</Text>
+					<Text style={styles.title2}>Ace</Text>
 				</View>
 				<View style={styles.footer}>
 					<Button
@@ -70,11 +71,18 @@ const styles = StyleSheet.create({
 		top: "20%",
 	},
 	title: {
-		fontSize: 50,
+		fontSize: 54,
 		textAlign: "center",
-		fontWeight: "700",
-		fontFamily: "Cocogoose",
+		fontWeight: "900",
+		fontFamily: "Comfortaa",
 		color: "#fff",
+	},
+	title2: {
+		fontSize: 54,
+		textAlign: "center",
+		fontWeight: "900",
+		fontFamily: "Comfortaa",
+		color: "#283242",
 	},
 
 	footer: {

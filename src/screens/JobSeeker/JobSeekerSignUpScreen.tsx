@@ -33,7 +33,7 @@ export const JobSeekerSignUpScreen = (props: any) => {
 	};
 
 	return (
-		<ScrollView bg='#1a202c'>
+		<ScrollView bg='#283242'>
 			<Box safeArea flex={1} p='2' py='8' w='90%' mx='auto'>
 				<Heading size='lg' color='teal.400' fontWeight='bold' marginBottom={4}>
 					<Button variant='ghost' colorScheme='teal' onPress={handleBack} marginRight={4}>
