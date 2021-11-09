@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Camera } from "expo-camera";
+import { Button } from "native-base";
 
 export function JobSeekerCreateScreen() {
 	const [hasPermission, setHasPermission] = useState(null);
@@ -22,17 +23,16 @@ export function JobSeekerCreateScreen() {
 	}
 	return (
 		<View style={styles.container}>
-			<Camera style={styles.camera} type={type}>
-				<View style={styles.buttonContainer}>
-					<TouchableOpacity
-						style={styles.button}
-						onPress={() => {
-							setType(type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back);
-						}}>
-						<Text style={styles.text}> Flip </Text>
-					</TouchableOpacity>
-				</View>
-			</Camera>
+			<View style={styles.buttonContainer}>
+				<Button
+					colorScheme='teal'
+					onPress={() => {
+						setType(type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back);
+					}}>
+					<Text style={styles.text}> Flip </Text>
+				</Button>
+			</View>
+			<Camera style={styles.camera} type={type}></Camera>
 		</View>
 	);
 }

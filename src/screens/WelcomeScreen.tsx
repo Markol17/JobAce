@@ -6,14 +6,14 @@ import { Button, View } from "native-base";
 export const WelcomeScreen = (props: any) => {
 	const navigation = useNavigation();
 
-	const handleSignUp = () => {
+	const handleJobSeeker = () => {
 		//@ts-ignore
-		navigation.navigate("SignUp");
+		navigation.navigate("JobSeeker");
 	};
 
-	const handleLogin = () => {
+	const handleEmployer = () => {
 		//@ts-ignore
-		navigation.navigate("Login");
+		navigation.navigate("Employer");
 	};
 
 	return (
@@ -27,7 +27,20 @@ export const WelcomeScreen = (props: any) => {
 					<Button
 						mb={2}
 						p={3}
-						style={{ borderRadius: 30, backgroundColor: "black", width: "90%" }}
+						style={{
+							borderRadius: 30,
+							backgroundColor: "black",
+							width: "90%",
+							shadowColor: "#000",
+							shadowOffset: {
+								width: 0,
+								height: 3,
+							},
+							shadowOpacity: 0.29,
+							shadowRadius: 4.65,
+
+							elevation: 7,
+						}}
 						_text={{
 							color: "black",
 							fontWeight: "bold",
@@ -35,12 +48,26 @@ export const WelcomeScreen = (props: any) => {
 						}}
 						bg='transparent'
 						colorScheme='teal'
-						onPress={handleSignUp}>
+						onPress={handleJobSeeker}>
 						<Text style={styles.btnText}>I am a job seeker</Text>
 					</Button>
 					<Button
 						p={3}
-						style={{ borderRadius: 30, borderColor: "white", borderWidth: 2, width: "90%" }}
+						style={{
+							borderRadius: 30,
+							borderColor: "white",
+							borderWidth: 2,
+							width: "90%",
+							shadowColor: "#000",
+							shadowOffset: {
+								width: 0,
+								height: 3,
+							},
+							shadowOpacity: 0.29,
+							shadowRadius: 4.65,
+
+							elevation: 7,
+						}}
 						_text={{
 							color: "black",
 							fontWeight: "bold",
@@ -48,7 +75,7 @@ export const WelcomeScreen = (props: any) => {
 						}}
 						bg='transparent'
 						colorScheme='teal'
-						onPress={handleLogin}>
+						onPress={handleEmployer}>
 						<Text style={styles.btnText}>I am an employer</Text>
 					</Button>
 				</View>

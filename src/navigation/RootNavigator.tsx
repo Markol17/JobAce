@@ -4,7 +4,7 @@ import { AuthStack } from "./AuthStack";
 import { AuthContext, SET_USER } from "../contexts";
 import { auth } from "../config";
 import { Text } from "react-native";
-import { JobSeekerAppTabs } from "./JobSeekerAppTabs";
+import { JobSeekerAppTabs } from "./jobSeeker/JobSeekerAppTabs";
 
 export const RootNavigator = () => {
 	const { user, dispatch } = useContext(AuthContext);

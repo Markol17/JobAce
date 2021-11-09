@@ -2,6 +2,7 @@ import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/core";
 import { Box, Heading, Image, Text, Stack, Badge, Pressable } from "native-base";
 import React from "react";
+import { Dimensions, StatusBar } from "react-native";
 
 interface JobSeekerCardProps {
 	firstName: string;
@@ -23,6 +24,7 @@ export const JobSeekerCard: React.FC<JobSeekerCardProps> = ({ ...props }) => {
 	};
 	return (
 		// <Pressable onPress={handleProfileClick}>
+		//height={Dimensions.get("window").height + StatusBar.currentHeight!}
 		<Box width='100%' height='100%'>
 			<Box width='100%' height='100%'>
 				<Image
@@ -44,7 +46,7 @@ export const JobSeekerCard: React.FC<JobSeekerCardProps> = ({ ...props }) => {
 				width='100%'
 				position='absolute'
 				bottom={0}
-				paddingBottom={tabBarHeight + 20}>
+				paddingBottom={tabBarHeight}>
 				<Stack space={3} p='4'>
 					<Heading size='xl' fontFamily='Comfortaa' color='white' fontWeight='bold'>
 						{firstName + " " + lastName}

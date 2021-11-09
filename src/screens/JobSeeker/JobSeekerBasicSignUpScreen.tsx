@@ -1,30 +1,31 @@
 import React from "react";
-import { auth } from "../config/firebase";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../../config";
 import {
 	Box,
-	Text,
+	Button,
 	FormControl,
 	Heading,
 	HStack,
 	Input,
-	Link,
 	VStack,
-	Button,
 	WarningOutlineIcon,
+	Text,
+	Link,
+	ScrollView,
 	useToast,
 } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
+import { signUpSchema } from "../../utils";
 import { Formik } from "formik";
-import { signInSchema } from "../utils";
 
-export const LoginScreen = (props: any) => {
+export const JobSeekerBasicSignUpScreen = (props: any) => {
 	const navigation = useNavigation();
 	const toast = useToast();
 
-	const handleSignUpRedirection = () => {
+	const handleSignInRedirection = () => {
 		//@ts-ignore
-		navigation.navigate("SignUp");
+		navigation.navigate("Login");
 	};
 
 	const handleBack = () => {
@@ -32,8 +33,8 @@ export const LoginScreen = (props: any) => {
 	};
 
 	return (
-		<Box bg='#283242' h='100%'>
-			<Box safeArea p='2' py='8' w='90%' mx='auto'>
+		<ScrollView bg='#283242'>
+			<Box safeArea flex={1} p='2' py='8' w='90%' mx='auto'>
 				<Box alignItems='center' justifyContent='space-between' flexDirection='row'>
 					<Button variant='ghost' colorScheme='teal' onPress={handleBack} marginRight={4}>
 						<AntDesign name='back' size={28} color='white' />
@@ -45,7 +46,7 @@ export const LoginScreen = (props: any) => {
 							color='white'
 							fontWeight='extrabold'
 							fontFamily='Comfortaa'>
-							{"Sign "}
+							{"Job Seeker "}
 						</Heading>
 						<Heading
 							size='lg'
@@ -53,18 +54,18 @@ export const LoginScreen = (props: any) => {
 							color='teal.400'
 							fontWeight='extrabold'
 							fontFamily='Comfortaa'>
-							In
+							Sign Up
 						</Heading>
 					</Box>
 				</Box>
 				<Box h='100%' flex={1}>
 					<Formik
-						initialValues={{ email: "", password: "" }}
-						validationSchema={signInSchema}
+						initialValues={{ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" }}
+						validationSchema={signUpSchema}
 						onSubmit={async (values) => {
-							const user = await auth.signInWithEmailAndPassword(values.email, values.password).catch((error) => {
+							const user = await auth.createUserWithEmailAndPassword(values.email, values.password).catch((error) => {
 								toast.show({
-									title: "Sign in failed",
+									title: "Sign up failed",
 									status: "error",
 									description: error.message,
 									duration: 3000,
@@ -72,12 +73,13 @@ export const LoginScreen = (props: any) => {
 							});
 							if (user) {
 								toast.show({
-									title: "Signed in successfully",
+									title: "Signed up successfully",
 									status: "success",
-									description: "Welcome back!",
+									description: "Welcome to Shigoto!",
 									duration: 3000,
 								});
 							}
+							console.log(user);
 						}}>
 						{({
 							handleChange,
@@ -95,6 +97,82 @@ export const LoginScreen = (props: any) => {
 							isSubmitting: any;
 						}) => (
 							<VStack space={3} mt='5'>
+								<FormControl isRequired isInvalid={!!errors.firstName}>
+									<FormControl.Label
+										_text={{
+											color: "white",
+											fontSize: "lg",
+											fontWeight: "semibold",
+										}}>
+										First Name
+									</FormControl.Label>
+									<Input
+										variant='filled'
+										backgroundColor='#1e2530'
+										placeholder={"First Name"}
+										size='xl'
+										onChangeText={handleChange("firstName")}
+										onBlur={handleBlur("firstName")}
+										value={values.firstName}
+										color='white'
+										style={{
+											borderRadius: 10,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 3,
+											},
+											shadowOpacity: 0.29,
+											shadowRadius: 4.65,
+
+											elevation: 7,
+										}}
+										_focus={{
+											borderColor: "teal.400",
+										}}
+									/>
+									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+										{errors.firstName}
+									</FormControl.ErrorMessage>
+								</FormControl>
+								<FormControl isRequired isInvalid={!!errors.lastName}>
+									<FormControl.Label
+										_text={{
+											color: "white",
+											fontSize: "lg",
+											fontWeight: "semibold",
+										}}>
+										Last Name
+									</FormControl.Label>
+									<Input
+										variant='filled'
+										backgroundColor='#1e2530'
+										placeholder={"Last Name"}
+										size='xl'
+										onChangeText={handleChange("lastName")}
+										onBlur={handleBlur("lastName")}
+										value={values.lastName}
+										color='white'
+										style={{
+											borderRadius: 10,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 3,
+											},
+											shadowOpacity: 0.29,
+											shadowRadius: 4.65,
+
+											elevation: 7,
+										}}
+										_focus={{
+											borderColor: "teal.400",
+										}}
+									/>
+									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+										{errors.lastName}
+									</FormControl.ErrorMessage>
+								</FormControl>
 								<FormControl isRequired isInvalid={!!errors.email}>
 									<FormControl.Label
 										_text={{
@@ -105,14 +183,14 @@ export const LoginScreen = (props: any) => {
 										Email
 									</FormControl.Label>
 									<Input
+										variant='filled'
+										backgroundColor='#1e2530'
 										placeholder={"Email"}
 										size='xl'
 										onChangeText={handleChange("email")}
 										onBlur={handleBlur("email")}
 										value={values.email}
 										color='white'
-										variant='filled'
-										backgroundColor='#1e2530'
 										style={{
 											borderRadius: 10,
 											shadowColor: "#000",
@@ -143,12 +221,51 @@ export const LoginScreen = (props: any) => {
 										Password
 									</FormControl.Label>
 									<Input
+										variant='filled'
+										backgroundColor='#1e2530'
 										type='password'
 										placeholder={"Password"}
 										size='xl'
 										onChangeText={handleChange("password")}
 										onBlur={handleBlur("password")}
 										value={values.password}
+										color='white'
+										style={{
+											borderRadius: 10,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 3,
+											},
+											shadowOpacity: 0.29,
+											shadowRadius: 4.65,
+
+											elevation: 7,
+										}}
+										_focus={{
+											borderColor: "teal.400",
+										}}
+									/>
+									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+										{errors.password}
+									</FormControl.ErrorMessage>
+								</FormControl>
+								<FormControl isRequired isInvalid={!!errors.confirmPassword}>
+									<FormControl.Label
+										_text={{
+											color: "white",
+											fontSize: "lg",
+											fontWeight: "semibold",
+										}}>
+										Confirm Password
+									</FormControl.Label>
+									<Input
+										type='password'
+										placeholder={"Confirm Password"}
+										size='xl'
+										onChangeText={handleChange("confirmPassword")}
+										onBlur={handleBlur("confirmPassword")}
+										value={values.confirmPassword}
 										color='white'
 										variant='filled'
 										backgroundColor='#1e2530'
@@ -169,14 +286,8 @@ export const LoginScreen = (props: any) => {
 										}}
 									/>
 									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
-										{errors.password}
+										{errors.confirmPassword}
 									</FormControl.ErrorMessage>
-									<Link
-										_text={{ fontSize: "sm", fontWeight: "semibold", color: "teal.400" }}
-										alignSelf='flex-end'
-										mt='1'>
-										Forget Password?
-									</Link>
 								</FormControl>
 								<Button
 									mt='4'
@@ -196,17 +307,17 @@ export const LoginScreen = (props: any) => {
 
 										elevation: 7,
 									}}
+									colorScheme='teal'
 									_text={{
 										color: "white",
 										fontWeight: "bold",
 										fontSize: "md",
-									}}
-									colorScheme='teal'>
-									Sign In
+									}}>
+									Next
 								</Button>
 								<HStack mt='6' justifyContent='center'>
 									<Text fontSize='md' color='white' fontWeight={400}>
-										I'm a new user.{" "}
+										I already have an account.{" "}
 									</Text>
 									<Link
 										_text={{
@@ -214,9 +325,9 @@ export const LoginScreen = (props: any) => {
 											fontWeight: "medium",
 											fontSize: "sm",
 										}}
-										onPress={handleSignUpRedirection}
+										onPress={handleSignInRedirection}
 										href='#'>
-										Sign Up
+										Sign In
 									</Link>
 								</HStack>
 							</VStack>
@@ -224,6 +335,6 @@ export const LoginScreen = (props: any) => {
 					</Formik>
 				</Box>
 			</Box>
-		</Box>
+		</ScrollView>
 	);
 };

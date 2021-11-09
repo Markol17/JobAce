@@ -14,12 +14,14 @@ import {
 	Link,
 	ScrollView,
 	useToast,
+	Select,
+	CheckIcon,
 } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { signUpSchema } from "../../utils";
 import { Formik } from "formik";
 
-export const JobSeekerSignUpScreen = (props: any) => {
+export const EmployerBasicSignUpScreen = (props: any) => {
 	const navigation = useNavigation();
 	const toast = useToast();
 
@@ -35,15 +37,39 @@ export const JobSeekerSignUpScreen = (props: any) => {
 	return (
 		<ScrollView bg='#283242'>
 			<Box safeArea flex={1} p='2' py='8' w='90%' mx='auto'>
-				<Heading size='lg' color='teal.400' fontWeight='bold' marginBottom={4}>
+				<Box alignItems='center' justifyContent='space-between' flexDirection='row'>
 					<Button variant='ghost' colorScheme='teal' onPress={handleBack} marginRight={4}>
 						<AntDesign name='back' size={28} color='white' />
 					</Button>
-					Sign Up
-				</Heading>
+					<Box flexDirection='row'>
+						<Heading
+							size='lg'
+							justifyContent='space-between'
+							color='white'
+							fontWeight='extrabold'
+							fontFamily='Comfortaa'>
+							{"Employer "}
+						</Heading>
+						<Heading
+							size='lg'
+							justifyContent='space-between'
+							color='teal.400'
+							fontWeight='extrabold'
+							fontFamily='Comfortaa'>
+							Sign Up
+						</Heading>
+					</Box>
+				</Box>
 				<Box h='100%' flex={1}>
 					<Formik
-						initialValues={{ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" }}
+						initialValues={{
+							firstName: "",
+							lastName: "",
+							email: "",
+							password: "",
+							confirmPassword: "",
+							organization: "",
+						}}
 						validationSchema={signUpSchema}
 						onSubmit={async (values) => {
 							const user = await auth.createUserWithEmailAndPassword(values.email, values.password).catch((error) => {
@@ -96,7 +122,20 @@ export const JobSeekerSignUpScreen = (props: any) => {
 										onBlur={handleBlur("firstName")}
 										value={values.firstName}
 										color='white'
-										style={{ borderRadius: 10 }}
+										variant='filled'
+										backgroundColor='#1e2530'
+										style={{
+											borderRadius: 10,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 3,
+											},
+											shadowOpacity: 0.29,
+											shadowRadius: 4.65,
+
+											elevation: 7,
+										}}
 										_focus={{
 											borderColor: "teal.400",
 										}}
@@ -121,7 +160,20 @@ export const JobSeekerSignUpScreen = (props: any) => {
 										onBlur={handleBlur("lastName")}
 										value={values.lastName}
 										color='white'
-										style={{ borderRadius: 10 }}
+										variant='filled'
+										backgroundColor='#1e2530'
+										style={{
+											borderRadius: 10,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 3,
+											},
+											shadowOpacity: 0.29,
+											shadowRadius: 4.65,
+
+											elevation: 7,
+										}}
 										_focus={{
 											borderColor: "teal.400",
 										}}
@@ -146,13 +198,68 @@ export const JobSeekerSignUpScreen = (props: any) => {
 										onBlur={handleBlur("email")}
 										value={values.email}
 										color='white'
-										style={{ borderRadius: 10 }}
+										variant='filled'
+										backgroundColor='#1e2530'
+										style={{
+											borderRadius: 10,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 3,
+											},
+											shadowOpacity: 0.29,
+											shadowRadius: 4.65,
+
+											elevation: 7,
+										}}
 										_focus={{
 											borderColor: "teal.400",
 										}}
 									/>
 									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
 										{errors.email}
+									</FormControl.ErrorMessage>
+								</FormControl>
+								<FormControl isRequired isInvalid={!!errors.organization}>
+									<FormControl.Label
+										_text={{
+											color: "white",
+											fontSize: "lg",
+											fontWeight: "semibold",
+										}}>
+										Organization
+									</FormControl.Label>
+									<Select
+										accessibilityLabel='Organization'
+										placeholder='Organization'
+										_selectedItem={{
+											bg: "teal.600",
+											endIcon: <CheckIcon size={5} />,
+										}}
+										minWidth='200'
+										onValueChange={handleChange("organization")}
+										defaultValue={values.organization}
+										color='white'
+										variant='filled'
+										backgroundColor='#1e2530'
+										style={{
+											borderRadius: 10,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 3,
+											},
+											shadowOpacity: 0.29,
+											shadowRadius: 4.65,
+
+											elevation: 7,
+										}}>
+										<Select.Item label='example1' value='1' />
+										<Select.Item label='example2' value='2' />
+										<Select.Item label='example3' value='3' />
+									</Select>
+									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+										{errors.organization}
 									</FormControl.ErrorMessage>
 								</FormControl>
 								<FormControl isRequired isInvalid={!!errors.password}>
@@ -172,7 +279,20 @@ export const JobSeekerSignUpScreen = (props: any) => {
 										onBlur={handleBlur("password")}
 										value={values.password}
 										color='white'
-										style={{ borderRadius: 10 }}
+										variant='filled'
+										backgroundColor='#1e2530'
+										style={{
+											borderRadius: 10,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 3,
+											},
+											shadowOpacity: 0.29,
+											shadowRadius: 4.65,
+
+											elevation: 7,
+										}}
 										_focus={{
 											borderColor: "teal.400",
 										}}
@@ -198,7 +318,20 @@ export const JobSeekerSignUpScreen = (props: any) => {
 										onBlur={handleBlur("confirmPassword")}
 										value={values.confirmPassword}
 										color='white'
-										style={{ borderRadius: 10 }}
+										variant='filled'
+										backgroundColor='#1e2530'
+										style={{
+											borderRadius: 10,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 3,
+											},
+											shadowOpacity: 0.29,
+											shadowRadius: 4.65,
+
+											elevation: 7,
+										}}
 										_focus={{
 											borderColor: "teal.400",
 										}}
@@ -213,7 +346,18 @@ export const JobSeekerSignUpScreen = (props: any) => {
 									isLoadingText='Submitting'
 									onPress={handleSubmit}
 									p={3}
-									style={{ borderRadius: 30 }}
+									style={{
+										borderRadius: 30,
+										shadowColor: "#000",
+										shadowOffset: {
+											width: 0,
+											height: 3,
+										},
+										shadowOpacity: 0.29,
+										shadowRadius: 4.65,
+
+										elevation: 7,
+									}}
 									colorScheme='teal'
 									_text={{
 										color: "white",

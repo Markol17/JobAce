@@ -1,8 +1,8 @@
 import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { HomeScreen, JobSeekerCreateScreen, ProfileScreen } from "../screens";
-import { BottomTab } from "../components";
+import { HomeScreen, JobSeekerCreateScreen, ProfileScreen } from "../../screens";
+import { BottomTab } from "../../components";
 import { BlurView } from "expo-blur";
 import { AntDesign } from "@expo/vector-icons";
 

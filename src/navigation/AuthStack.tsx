@@ -1,6 +1,8 @@
 import * as React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { LoginScreen, JobSeekerSignUpScreen, WelcomeScreen } from "../screens";
+import { WelcomeScreen } from "../screens";
+import { JobSeekerAuthStack } from "./jobSeeker/JobSeekerAuthStack";
+import { EmployerAuthStack } from "./employer/EmployerAuthStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -11,8 +13,8 @@ export const AuthStack = () => {
 				headerShown: false,
 			}}>
 			<Stack.Screen name='Welcome' component={WelcomeScreen} />
-			<Stack.Screen name='Login' component={LoginScreen} />
-			<Stack.Screen name='SignUp' component={JobSeekerSignUpScreen} />
+			<Stack.Screen name='Employer' component={EmployerAuthStack} />
+			<Stack.Screen name='JobSeeker' component={JobSeekerAuthStack} />
 		</Stack.Navigator>
 	);
 };
