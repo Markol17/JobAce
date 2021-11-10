@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { auth } from "../../config";
+import { auth, database } from "../../config";
 import {
 	Box,
 	Button,
@@ -16,7 +16,7 @@ import {
 	useToast,
 } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
-import { signUpSchema } from "../../utils";
+import { jobSeekerSignUpSchema } from "../../utils";
 import { Formik } from "formik";
 
 export const JobSeekerBasicSignUpScreen = (props: any) => {
@@ -61,7 +61,7 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 				<Box h='100%' flex={1}>
 					<Formik
 						initialValues={{ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" }}
-						validationSchema={signUpSchema}
+						validationSchema={jobSeekerSignUpSchema}
 						onSubmit={async (values) => {
 							const user = await auth.createUserWithEmailAndPassword(values.email, values.password).catch((error) => {
 								toast.show({

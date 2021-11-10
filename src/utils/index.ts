@@ -1,3 +1,3 @@
-import { signInSchema, signUpSchema } from "./FormValidations";
+import { signInSchema, employerSignUpSchema, jobSeekerSignUpSchema } from "./FormValidations";
 
-export { signInSchema, signUpSchema };
+export { signInSchema, employerSignUpSchema, jobSeekerSignUpSchema };

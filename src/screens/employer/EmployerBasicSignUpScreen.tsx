@@ -16,9 +16,10 @@ import {
 	useToast,
 	Select,
 	CheckIcon,
+	Typeahead,
 } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
-import { signUpSchema } from "../../utils";
+import { employerSignUpSchema } from "../../utils";
 import { Formik } from "formik";
 
 export const EmployerBasicSignUpScreen = (props: any) => {
@@ -70,7 +71,7 @@ export const EmployerBasicSignUpScreen = (props: any) => {
 							confirmPassword: "",
 							organization: "",
 						}}
-						validationSchema={signUpSchema}
+						validationSchema={employerSignUpSchema}
 						onSubmit={async (values) => {
 							const user = await auth.createUserWithEmailAndPassword(values.email, values.password).catch((error) => {
 								toast.show({
@@ -227,18 +228,14 @@ export const EmployerBasicSignUpScreen = (props: any) => {
 											fontSize: "lg",
 											fontWeight: "semibold",
 										}}>
-										Organization
+										Organization Code
 									</FormControl.Label>
-									<Select
-										accessibilityLabel='Organization'
-										placeholder='Organization'
-										_selectedItem={{
-											bg: "teal.600",
-											endIcon: <CheckIcon size={5} />,
-										}}
-										minWidth='200'
-										onValueChange={handleChange("organization")}
-										defaultValue={values.organization}
+									<Input
+										placeholder={"Organization Code"}
+										size='xl'
+										onChangeText={handleChange("organization")}
+										onBlur={handleBlur("organization")}
+										value={values.organization}
 										color='white'
 										variant='filled'
 										backgroundColor='#1e2530'
@@ -253,11 +250,11 @@ export const EmployerBasicSignUpScreen = (props: any) => {
 											shadowRadius: 4.65,
 
 											elevation: 7,
-										}}>
-										<Select.Item label='example1' value='1' />
-										<Select.Item label='example2' value='2' />
-										<Select.Item label='example3' value='3' />
-									</Select>
+										}}
+										_focus={{
+											borderColor: "teal.400",
+										}}
+									/>
 									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
 										{errors.organization}
 									</FormControl.ErrorMessage>
