@@ -18,6 +18,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import { jobSeekerSignUpSchema } from "../../utils";
 import { Formik } from "formik";
+import { jobSeekerRegister } from "../../api";
 
 export const JobSeekerBasicSignUpScreen = (props: any) => {
 	const navigation = useNavigation();
@@ -26,6 +27,17 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 	const handleSignInRedirection = () => {
 		//@ts-ignore
 		navigation.navigate("Login");
+	};
+
+	const handleNext = ({ ...params }: { email: string; password: string; lastName: string; firstName: string }) => {
+		const { email, password, lastName, firstName } = params;
+		//@ts-ignore
+		navigation.navigate("ResumeUpload", {
+			email,
+			password,
+			lastName,
+			firstName,
+		});
 	};
 
 	const handleBack = () => {
@@ -63,23 +75,36 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 						initialValues={{ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" }}
 						validationSchema={jobSeekerSignUpSchema}
 						onSubmit={async (values) => {
-							const user = await auth.createUserWithEmailAndPassword(values.email, values.password).catch((error) => {
-								toast.show({
-									title: "Sign up failed",
-									status: "error",
-									description: error.message,
-									duration: 3000,
-								});
+							// const error = await jobSeekerRegister({
+							// 	email: values.email,
+							// 	password: values.password,
+							// 	lastName: values.lastName,
+							// 	firstName: values.firstName,
+							// });
+
+							// if (!error) {
+							// 	toast.show({
+							// 		title: "Signed up successfully",
+							// 		status: "success",
+							// 		description: "Welcome to JobAce!",
+							// 		duration: 3000,
+							// 	});
+
+							// This currently doesn't check if the user already exists. It goes to the next page regardless
+							handleNext({
+								email: values.email,
+								password: values.password,
+								lastName: values.lastName,
+								firstName: values.firstName,
 							});
-							if (user) {
-								toast.show({
-									title: "Signed up successfully",
-									status: "success",
-									description: "Welcome to Shigoto!",
-									duration: 3000,
-								});
-							}
-							console.log(user);
+							// } else {
+							// 	toast.show({
+							// 		title: "Sign up failed",
+							// 		status: "error",
+							// 		description: error,
+							// 		duration: 3000,
+							// 	});
+							// }
 						}}>
 						{({
 							handleChange,
