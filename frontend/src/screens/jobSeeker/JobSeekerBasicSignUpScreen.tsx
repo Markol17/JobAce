@@ -88,7 +88,7 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 							// 		duration: 3000,
 							// 	});
 
-							// This currently doesn't check if the user already exists. It goes to the next page regardless
+							// call cloud function
 							handleNext({
 								email: values.email,
 								password: values.password,
