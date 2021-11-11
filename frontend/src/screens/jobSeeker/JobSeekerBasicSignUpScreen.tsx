@@ -14,11 +14,11 @@ import {
 	Link,
 	ScrollView,
 	useToast,
+	Checkbox,
 } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { jobSeekerSignUpSchema } from "../../utils";
 import { Formik } from "formik";
-import { jobSeekerRegister } from "../../api";
 
 export const JobSeekerBasicSignUpScreen = (props: any) => {
 	const navigation = useNavigation();
@@ -29,14 +29,12 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 		navigation.navigate("Login");
 	};
 
-	const handleNext = ({ ...params }: { email: string; password: string; lastName: string; firstName: string }) => {
-		const { email, password, lastName, firstName } = params;
+	const handleNext = ({ ...params }: { email: string; password: string }) => {
+		const { email, password } = params;
 		//@ts-ignore
 		navigation.navigate("ResumeUpload", {
 			email,
 			password,
-			lastName,
-			firstName,
 		});
 	};
 
@@ -94,8 +92,6 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 							handleNext({
 								email: values.email,
 								password: values.password,
-								lastName: values.lastName,
-								firstName: values.firstName,
 							});
 							// } else {
 							// 	toast.show({
@@ -314,6 +310,21 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 										{errors.confirmPassword}
 									</FormControl.ErrorMessage>
 								</FormControl>
+								<Checkbox colorScheme='teal' value={""}>
+									<Text marginLeft={3} color='white'>
+										{"I accept the "}
+									</Text>
+									<Link
+										_text={{
+											color: "teal.400",
+											fontWeight: "medium",
+											fontSize: "sm",
+										}}
+										onPress={handleSignInRedirection}
+										href='#'>
+										terms and conditions
+									</Link>
+								</Checkbox>
 								<Button
 									mt='4'
 									isLoading={isSubmitting}

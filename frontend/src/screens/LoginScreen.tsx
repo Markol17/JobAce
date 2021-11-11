@@ -33,7 +33,7 @@ export const LoginScreen = (props: any) => {
 
 	return (
 		<Box bg='#283242' h='100%'>
-			<Box safeArea p='2' py='8' w='90%' mx='auto'>
+			<Box safeArea flex={1} p='2' py='8' w='90%' mx='auto'>
 				<Box alignItems='center' justifyContent='space-between' flexDirection='row'>
 					<Button variant='ghost' colorScheme='teal' onPress={handleBack} marginRight={4}>
 						<AntDesign name='back' size={28} color='white' />
