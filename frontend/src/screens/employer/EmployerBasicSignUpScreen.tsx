@@ -364,19 +364,12 @@ export const EmployerBasicSignUpScreen = (props: any) => {
 									Sign Up
 								</Button>
 								<HStack mt='6' justifyContent='center'>
-									<Text fontSize='md' color='white' fontWeight={400}>
+									<Text fontSize='md' color='white' fontWeight='bold'>
 										I already have an account.{" "}
 									</Text>
-									<Link
-										_text={{
-											color: "teal.400",
-											fontWeight: "medium",
-											fontSize: "sm",
-										}}
-										onPress={handleSignInRedirection}
-										href='#'>
+									<Text underline color='teal.400' fontWeight='bold' fontSize='md' onPress={handleSignInRedirection}>
 										Sign In
-									</Link>
+									</Text>
 								</HStack>
 							</VStack>
 						)}

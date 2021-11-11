@@ -24,7 +24,7 @@ export const LoginScreen = (props: any) => {
 
 	const handleSignUpRedirection = () => {
 		//@ts-ignore
-		navigation.navigate("SignUp");
+		navigation.navigate("ResumeUpload");
 	};
 
 	const handleBack = () => {
@@ -171,12 +171,9 @@ export const LoginScreen = (props: any) => {
 									<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
 										{errors.password}
 									</FormControl.ErrorMessage>
-									<Link
-										_text={{ fontSize: "sm", fontWeight: "semibold", color: "teal.400" }}
-										alignSelf='flex-end'
-										mt='1'>
+									<Text underline fontSize='md' fontWeight='bold' color='teal.400' alignSelf='flex-end' mt='1'>
 										Forget Password?
-									</Link>
+									</Text>
 								</FormControl>
 								<Button
 									mt='4'
@@ -205,19 +202,12 @@ export const LoginScreen = (props: any) => {
 									Sign In
 								</Button>
 								<HStack mt='6' justifyContent='center'>
-									<Text fontSize='md' color='white' fontWeight={400}>
+									<Text fontSize='md' fontWeight='bold' color='white'>
 										I'm a new user.{" "}
 									</Text>
-									<Link
-										_text={{
-											color: "teal.400",
-											fontWeight: "medium",
-											fontSize: "sm",
-										}}
-										onPress={handleSignUpRedirection}
-										href='#'>
+									<Text underline color='teal.400' fontWeight='bold' fontSize='md' onPress={handleSignUpRedirection}>
 										Sign Up
-									</Link>
+									</Text>
 								</HStack>
 							</VStack>
 						)}

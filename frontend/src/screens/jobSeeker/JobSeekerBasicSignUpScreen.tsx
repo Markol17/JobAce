@@ -352,19 +352,12 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 									Next
 								</Button>
 								<HStack mt='6' justifyContent='center'>
-									<Text fontSize='md' color='white' fontWeight={400}>
-										I already have an account.{" "}
+									<Text fontSize='md' color='white' fontWeight='bold'>
+										Already have an account?{" "}
 									</Text>
-									<Link
-										_text={{
-											color: "teal.400",
-											fontWeight: "medium",
-											fontSize: "sm",
-										}}
-										onPress={handleSignInRedirection}
-										href='#'>
+									<Text underline color='teal.400' fontWeight='bold' fontSize='md' onPress={handleSignInRedirection}>
 										Sign In
-									</Link>
+									</Text>
 								</HStack>
 							</VStack>
 						)}

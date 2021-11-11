@@ -29,7 +29,7 @@ export const WelcomeScreen = (props: any) => {
 						p={3}
 						style={{
 							borderRadius: 30,
-							backgroundColor: "black",
+							backgroundColor: "#283242",
 							width: "90%",
 							shadowColor: "#000",
 							shadowOffset: {
@@ -42,7 +42,6 @@ export const WelcomeScreen = (props: any) => {
 							elevation: 7,
 						}}
 						_text={{
-							color: "black",
 							fontWeight: "bold",
 							fontSize: "lg",
 						}}
@@ -69,11 +68,10 @@ export const WelcomeScreen = (props: any) => {
 							elevation: 7,
 						}}
 						_text={{
-							color: "black",
 							fontWeight: "bold",
 							fontSize: "lg",
 						}}
-						bg='transparent'
+						bg='#14b8a6'
 						colorScheme='teal'
 						onPress={handleEmployer}>
 						<Text style={styles.btnText}>I am an employer</Text>

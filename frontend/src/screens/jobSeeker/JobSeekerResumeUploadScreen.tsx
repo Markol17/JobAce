@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import {
-	Box,
-	Text,
-	FormControl,
-	Heading,
-	HStack,
-	Input,
-	Link,
-	VStack,
-	Button,
-	WarningOutlineIcon,
-	useToast,
-} from "native-base";
+import { Box, Text, Heading, Button, useToast, VStack, IconButton } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
+import { ResumeUploaded, UploadResume } from "../../svgs";
 
 export const JobSeekerResumeUploadScreen = (props: any) => {
 	const [resume, setResume] = useState<any>(null);
@@ -56,11 +45,9 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 	};
 
 	return (
-		// check: https://docs.expo.dev/versions/latest/sdk/document-picker/ for iOS support
-		// check https://snack.expo.dev/@ritam/document-picker for implementation example
-		<Box bg='#283242' h='100%'>
-			<Box safeArea flex={1} p='2' py='8' w='90%' mx='auto'>
-				<Box alignItems='center' justifyContent='space-between' flexDirection='row'>
+		<VStack bg='#283242' h='100%' py='8'>
+			<Box safeArea flex={1} p='2' w='90%' mx='auto'>
+				<Box alignItems='center' justifyContent='space-between' marginBottom={40} flexDirection='row'>
 					<Button variant='ghost' colorScheme='teal' onPress={handleBack} marginRight={4}>
 						<AntDesign name='back' size={28} color='white' />
 					</Button>
@@ -83,22 +70,42 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 						</Heading>
 					</Box>
 				</Box>
-				<Box h='100%' justifyContent='center' alignItems='center'>
-					{resume && resume.name && (
-						<Box flexDirection='row' justifyContent='space-between' w='100%'>
-							<Text fontSize={20} color='white' fontWeight='extrabold' fontFamily='Comfortaa'>
-								{resume && resume.name}
+				<Box h='72%' justifyContent='space-between' alignItems='center'>
+					{resume && resume.name ? (
+						<Box alignItems='center'>
+							<ResumeUploaded />
+							<Box flexDirection='row' alignItems='center' justifyContent='center' marginTop={10}>
+								<Text fontSize='lg' color='white' fontWeight='bold' marginRight={4}>
+									{resume && resume.name}
+								</Text>
+								<IconButton
+									variant='ghost'
+									colorScheme='teal'
+									onPress={handleResumeDelete}
+									_icon={{
+										as: AntDesign,
+										name: "delete",
+										size: 6,
+										color: "white",
+									}}
+								/>
+							</Box>
+						</Box>
+					) : (
+						<Box alignItems='center'>
+							<UploadResume />
+							<Text color='white' fontSize='lg' fontWeight='bold' marginTop={10}>
+								No resume is not uploaded yet
 							</Text>
-							<Button variant='ghost' colorScheme='teal' onPress={handleResumeDelete}>
-								<AntDesign name='delete' size={24} color='white' />
-							</Button>
+							<Text color='white' fontSize='sm' fontWeight='semibold'>
+								Supported files are of type .pdf
+							</Text>
 						</Box>
 					)}
 					<Button
 						w='100%'
 						size='lg'
-						endIcon={<AntDesign name='plus' size={24} color='white' />}
-						marginTop={100}
+						endIcon={<AntDesign name='plus' size={26} color='white' />}
 						p={3}
 						style={{
 							borderRadius: 30,
@@ -113,18 +120,16 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 							elevation: 7,
 						}}
 						_text={{
-							color: "white",
 							fontWeight: "bold",
 							fontSize: "md",
 						}}
-						colorScheme='teal'
+						bg='#1e2530'
 						onPress={pickDocument}>
 						Upload Resume
 					</Button>
 					<Button
 						w='100%'
 						size='lg'
-						marginTop={100}
 						p={3}
 						style={{
 							borderRadius: 30,
@@ -149,6 +154,6 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 					</Button>
 				</Box>
 			</Box>
-		</Box>
+		</VStack>
 	);
 };
