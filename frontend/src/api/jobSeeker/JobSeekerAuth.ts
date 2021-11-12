@@ -30,3 +30,8 @@ export async function login(credentials: { email: string; password: string }) {
 		console.log(err);
 	}
 }
+
+export async function getSkills() {
+	const skills = await database.collection("skills").get();
+	return skills.docs.map((doc) => doc.data());
+}

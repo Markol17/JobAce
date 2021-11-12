@@ -41,7 +41,7 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 
 	const handleNext = () => {
 		//@ts-ignore
-		navigation.navigate("SignUp");
+		navigation.navigate("Skills");
 	};
 
 	return (
@@ -95,7 +95,7 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 						<Box alignItems='center'>
 							<UploadResume />
 							<Text color='white' fontSize='lg' fontWeight='bold' marginTop={10}>
-								No resume is not uploaded yet
+								No resume is uploaded yet
 							</Text>
 							<Text color='white' fontSize='sm' fontWeight='semibold'>
 								Supported files are of type .pdf
@@ -128,6 +128,7 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 						Upload Resume
 					</Button>
 					<Button
+						isDisabled={!(resume && resume.name)}
 						w='100%'
 						size='lg'
 						p={3}

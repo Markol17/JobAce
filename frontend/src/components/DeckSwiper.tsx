@@ -18,6 +18,7 @@ export const DeckSwiper: React.FC<DeckSwiperProps> = () => {
 						{ color: "pink.600", name: "GraphQL" },
 						{ color: "blue.600", name: "Docker" },
 					],
+					experience: [],
 					picture:
 						"https://media-exp1.licdn.com/dms/image/C5603AQHzR0QdUhA-xA/profile-displayphoto-shrink_800_800/0/1628540091317?e=1641427200&v=beta&t=wPe75Xo9mSHjw_2XFLnp4osAJxiO6uvvntBhCAGY36w",
 				},
@@ -30,6 +31,7 @@ export const DeckSwiper: React.FC<DeckSwiperProps> = () => {
 						{ color: "lightBlue.500", name: "React Native" },
 						{ color: "yellow.400", name: "Python" },
 					],
+					experience: [],
 					picture:
 						"https://media-exp1.licdn.com/dms/image/C4E35AQEp-KzlLBMxbw/profile-framedphoto-shrink_800_800/0/1616548825977?e=1636092000&v=beta&t=5MbIloZKClPx-QZLJJGLn8wQzAH-LlH8JoqQc7TNyOo",
 				},
@@ -42,6 +44,7 @@ export const DeckSwiper: React.FC<DeckSwiperProps> = () => {
 						{ color: "orange.700", name: "Java" },
 						{ color: "yellow.400", name: "Python" },
 					],
+					experience: [],
 					picture: "https://cdn.discordapp.com/attachments/894274640619376674/905998990150090752/shaun_1.png",
 				},
 			]}

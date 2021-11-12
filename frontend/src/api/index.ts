@@ -1,3 +1,3 @@
-import { jobSeekerRegister, login } from "./jobSeeker/JobSeekerAuth";
+import { getSkills, jobSeekerRegister, login } from "./jobSeeker/JobSeekerAuth";
 
-export { jobSeekerRegister, login };
+export { jobSeekerRegister, login, getSkills };

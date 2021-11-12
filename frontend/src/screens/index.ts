@@ -6,6 +6,7 @@ import { WelcomeScreen } from "./WelcomeScreen";
 import { JobSeekerCreateScreen } from "./jobSeeker/JobSeekerCreateScreen";
 import { EmployerBasicSignUpScreen } from "./employer/EmployerBasicSignUpScreen";
 import { JobSeekerResumeUploadScreen } from "./jobSeeker/JobSeekerResumeUploadScreen";
+import { JobSeekerSkillsScreen } from "./jobSeeker/JobSeekerSkillsScreen";
 
 export {
 	HomeScreen,
@@ -16,4 +17,5 @@ export {
 	ProfileScreen,
 	JobSeekerCreateScreen,
 	JobSeekerResumeUploadScreen,
+	JobSeekerSkillsScreen,
 };
