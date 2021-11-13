@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Box, Text, Heading, Button, useToast, VStack, IconButton, Badge } from "native-base";
+import { Box, Text, Heading, Button, VStack } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { getSkills } from "../../api";
 
@@ -15,7 +15,7 @@ export const JobSeekerSkillsScreen = (props: any) => {
 
 	const handleNext = () => {
 		//@ts-ignore
-		navigation.navigate("SignUp");
+		navigation.navigate("JobExperiences");
 	};
 
 	const handleSkillToggle = (skill: { name: string; color: string }) => {

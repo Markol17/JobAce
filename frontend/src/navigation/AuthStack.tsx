@@ -11,6 +11,7 @@ export const AuthStack = () => {
 		<Stack.Navigator
 			screenOptions={{
 				headerShown: false,
+				animation: "fade",
 			}}>
 			<Stack.Screen name='Welcome' component={WelcomeScreen} />
 			<Stack.Screen name='Employer' component={EmployerAuthStack} />

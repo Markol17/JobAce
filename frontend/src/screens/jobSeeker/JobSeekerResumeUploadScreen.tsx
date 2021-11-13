@@ -86,7 +86,7 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 										as: AntDesign,
 										name: "delete",
 										size: 6,
-										color: "white",
+										color: "error.600",
 									}}
 								/>
 							</Box>
