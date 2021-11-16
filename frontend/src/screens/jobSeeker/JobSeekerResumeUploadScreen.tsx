@@ -100,7 +100,7 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 							<Text color='white' fontSize='lg' fontWeight='bold' marginTop={10}>
 								No resume is uploaded yet
 							</Text>
-							<Text color='white' fontSize='sm' fontWeight='semibold'>
+							<Text color='gray.300' fontSize='sm' fontWeight='semibold'>
 								Supported files are of type .pdf
 							</Text>
 						</Box>

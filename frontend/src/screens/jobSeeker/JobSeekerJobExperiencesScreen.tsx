@@ -376,7 +376,7 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 													<Text color='white' fontSize='lg' fontWeight='bold' marginTop={10}>
 														No job experiences yet
 													</Text>
-													<Text color='white' fontSize='sm' fontWeight='semibold'>
+													<Text color='gray.300' fontSize='sm' fontWeight='semibold'>
 														Add a job experience to complete your profile
 													</Text>
 												</Box>
