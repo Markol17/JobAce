@@ -128,6 +128,7 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 										First Name
 									</FormControl.Label>
 									<Input
+										selectionColor={"white"}
 										variant='filled'
 										backgroundColor='#1e2530'
 										placeholder={"First Name"}
@@ -166,6 +167,7 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 										Last Name
 									</FormControl.Label>
 									<Input
+										selectionColor={"white"}
 										variant='filled'
 										backgroundColor='#1e2530'
 										placeholder={"Last Name"}
@@ -204,6 +206,7 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 										Email
 									</FormControl.Label>
 									<Input
+										selectionColor={"white"}
 										variant='filled'
 										backgroundColor='#1e2530'
 										placeholder={"Email"}
@@ -242,6 +245,7 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 										Password
 									</FormControl.Label>
 									<Input
+										selectionColor={"white"}
 										variant='filled'
 										backgroundColor='#1e2530'
 										type='password'
@@ -281,6 +285,7 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 										Confirm Password
 									</FormControl.Label>
 									<Input
+										selectionColor={"white"}
 										type='password'
 										placeholder={"Confirm Password"}
 										size='xl'

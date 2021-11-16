@@ -24,7 +24,7 @@ export const LoginScreen = (props: any) => {
 
 	const handleSignUpRedirection = () => {
 		//@ts-ignore
-		navigation.navigate("SignUp");
+		navigation.navigate("ResumeUpload");
 	};
 
 	const handleBack = () => {
@@ -105,6 +105,7 @@ export const LoginScreen = (props: any) => {
 										Email
 									</FormControl.Label>
 									<Input
+										selectionColor={"white"}
 										placeholder={"Email"}
 										size='xl'
 										onChangeText={handleChange("email")}
@@ -143,6 +144,7 @@ export const LoginScreen = (props: any) => {
 										Password
 									</FormControl.Label>
 									<Input
+										selectionColor={"white"}
 										type='password'
 										placeholder={"Password"}
 										size='xl'

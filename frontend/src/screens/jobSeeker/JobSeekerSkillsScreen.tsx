@@ -103,7 +103,6 @@ export const JobSeekerSkillsScreen = (props: any) => {
 						</Box>
 					</Box>
 					<Button
-						bottom={0}
 						isDisabled={selectedSkills.length < 1}
 						w='100%'
 						size='lg'

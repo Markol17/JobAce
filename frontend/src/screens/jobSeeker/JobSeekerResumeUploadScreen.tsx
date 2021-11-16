@@ -4,6 +4,7 @@ import { Box, Text, Heading, Button, useToast, VStack, IconButton } from "native
 import { AntDesign } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
 import { ResumeUploaded, UploadResume } from "../../svgs";
+import { Dimensions } from "react-native";
 
 export const JobSeekerResumeUploadScreen = (props: any) => {
 	const [resume, setResume] = useState<any>(null);
@@ -44,10 +45,12 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 		navigation.navigate("Skills");
 	};
 
+	const screenHeight = Dimensions.get("window").height;
+
 	return (
 		<VStack bg='#283242' h='100%' py='8'>
-			<Box safeArea flex={1} p='2' w='90%' mx='auto'>
-				<Box alignItems='center' justifyContent='space-between' marginBottom={40} flexDirection='row'>
+			<Box safeArea flex={1} p='2' w='90%' mx='auto' h={screenHeight} justifyContent='space-between'>
+				<Box alignItems='center' justifyContent='space-between' flexDirection='row'>
 					<Button variant='ghost' colorScheme='teal' onPress={handleBack} marginRight={4}>
 						<AntDesign name='back' size={28} color='white' />
 					</Button>
@@ -70,9 +73,9 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 						</Heading>
 					</Box>
 				</Box>
-				<Box h='72%' justifyContent='space-between' alignItems='center'>
+				<Box h='100%' py='8' justifyContent='space-between'>
 					{resume && resume.name ? (
-						<Box alignItems='center'>
+						<Box alignItems='center' marginTop={32}>
 							<ResumeUploaded />
 							<Box flexDirection='row' alignItems='center' justifyContent='center' marginTop={10}>
 								<Text fontSize='lg' color='white' fontWeight='bold' marginRight={4}>
@@ -92,7 +95,7 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 							</Box>
 						</Box>
 					) : (
-						<Box alignItems='center'>
+						<Box alignItems='center' marginTop={32}>
 							<UploadResume />
 							<Text color='white' fontSize='lg' fontWeight='bold' marginTop={10}>
 								No resume is uploaded yet

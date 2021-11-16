@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "usesIcloudStorage": true 
+      "usesIcloudStorage": true
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +28,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "",
+    "githubUrl": "https://github.com/Markol17/JobAce"
   }
 }
