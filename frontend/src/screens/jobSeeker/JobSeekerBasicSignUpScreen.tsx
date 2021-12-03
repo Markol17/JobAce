@@ -316,19 +316,12 @@ export const JobSeekerBasicSignUpScreen = (props: any) => {
 									</FormControl.ErrorMessage>
 								</FormControl>
 								<Checkbox colorScheme='teal' value={""}>
-									<Text marginLeft={3} color='white'>
+									<Text fontWeight='bold' fontSize='md' marginLeft={3} color='white'>
 										{"I accept the "}
 									</Text>
-									<Link
-										_text={{
-											color: "teal.400",
-											fontWeight: "medium",
-											fontSize: "sm",
-										}}
-										onPress={handleSignInRedirection}
-										href='#'>
+									<Text underline color='teal.400' fontWeight='bold' fontSize='md'>
 										terms and conditions
-									</Link>
+									</Text>
 								</Checkbox>
 								<Button
 									mt='4'

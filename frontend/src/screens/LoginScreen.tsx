@@ -24,7 +24,7 @@ export const LoginScreen = (props: any) => {
 
 	const handleSignUpRedirection = () => {
 		//@ts-ignore
-		navigation.navigate("ResumeUpload");
+		navigation.navigate("JobExperiences");
 	};
 
 	const handleBack = () => {

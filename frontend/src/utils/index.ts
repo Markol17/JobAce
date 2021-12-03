@@ -1,4 +1,4 @@
-import { signInSchema, employerSignUpSchema, jobSeekerSignUpSchema } from "./FormValidations";
+import { signInSchema, employerSignUpSchema, jobSeekerSignUpSchema, jobExperienceSchema } from "./FormValidations";
 import { roles } from "./Roles";
 
-export { signInSchema, employerSignUpSchema, jobSeekerSignUpSchema, roles };
+export { signInSchema, employerSignUpSchema, jobSeekerSignUpSchema, jobExperienceSchema, roles };

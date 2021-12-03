@@ -12,16 +12,17 @@ import {
 	ScrollView,
 	Text,
 	IconButton,
+	Checkbox,
 } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { FieldArray, Form, Formik } from "formik";
 import { BriefCase } from "../../svgs";
 import { Dimensions } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { jobExperienceSchema } from "../../utils";
+import { DatePicker } from "../../components";
 
 export const JobSeekerJobExperiencesScreen = (props: any) => {
-	const [date, setDate] = useState(new Date(1598051730000));
-	const [mode, setMode] = useState("date");
 	const [show, setShow] = useState(false);
 	const navigation = useNavigation();
 
@@ -34,11 +35,11 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 		navigation.navigate("SignUp");
 	};
 
-	const onChange = (event, selectedDate) => {
-		const currentDate = selectedDate || date;
-		setShow(Platform.OS === "ios");
-		setDate(currentDate);
-	};
+	// const onChange = (_event: any, selectedDate: any) => {
+	// 	const currentDate = selectedDate || date;
+	// 	setShow(Platform.OS === "ios");
+	// 	setDate(currentDate);
+	// };
 
 	const showCalendar = () => {
 		setShow(true);
@@ -75,6 +76,7 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 				<Box h='100%' flex={1}>
 					<Formik
 						initialValues={{ experiences: [] }}
+						validationSchema={jobExperienceSchema}
 						onSubmit={async (values) => {
 							console.log(values);
 						}}>
@@ -85,6 +87,7 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 							values,
 							errors,
 							isSubmitting,
+							setFieldValue,
 						}: {
 							handleChange: any;
 							handleBlur: any;
@@ -92,15 +95,17 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 							values: any;
 							errors: any;
 							isSubmitting: any;
+							setFieldValue: () => void;
 						}) => (
 							<VStack space={3} mt='5' h='100%'>
+								{console.log(errors)}
 								<FieldArray
 									name='experiences'
 									render={(arrayHelpers) => (
 										<Box h='100%' justifyContent='space-between'>
 											{values.experiences && values.experiences.length > 0 ? (
 												values.experiences.map((_experience: any, index: number) => (
-													<Box>
+													<Box key={index}>
 														<VStack key={index} space={3} mt='5'>
 															<Box flexDirection='row' justifyContent='space-between'>
 																<Box flexDirection='row'>
@@ -121,7 +126,7 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 																	}}
 																/>
 															</Box>
-															<FormControl isRequired isInvalid={!!errors.firstName}>
+															<FormControl isInvalid={errors && errors.experiences && errors.experiences[index].title}>
 																<FormControl.Label
 																	_text={{
 																		color: "white",
@@ -156,10 +161,12 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 																		borderColor: "teal.400",
 																	}}
 																/>
-																<FormControl.ErrorMessage
-																	leftIcon={<WarningOutlineIcon size='xs' />}></FormControl.ErrorMessage>
+																<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+																	{errors && errors.experiences && errors.experiences[index].title}
+																</FormControl.ErrorMessage>
 															</FormControl>
-															<FormControl isRequired isInvalid={!!errors.firstName}>
+															<FormControl
+																isInvalid={errors && errors.experiences && errors.experiences[index].companyName}>
 																<FormControl.Label
 																	_text={{
 																		color: "white",
@@ -194,10 +201,11 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 																		borderColor: "teal.400",
 																	}}
 																/>
-																<FormControl.ErrorMessage
-																	leftIcon={<WarningOutlineIcon size='xs' />}></FormControl.ErrorMessage>
+																<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+																	{errors && errors.experiences && errors.experiences[index].companyName}
+																</FormControl.ErrorMessage>
 															</FormControl>
-															<FormControl isInvalid={!!errors.firstName}>
+															<FormControl>
 																<FormControl.Label
 																	_text={{
 																		color: "white",
@@ -232,10 +240,8 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 																		borderColor: "teal.400",
 																	}}
 																/>
-																<FormControl.ErrorMessage
-																	leftIcon={<WarningOutlineIcon size='xs' />}></FormControl.ErrorMessage>
 															</FormControl>
-															<FormControl isInvalid={!!errors.firstName}>
+															<FormControl>
 																<FormControl.Label
 																	_text={{
 																		color: "white",
@@ -270,10 +276,9 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 																		borderColor: "teal.400",
 																	}}
 																/>
-																<FormControl.ErrorMessage
-																	leftIcon={<WarningOutlineIcon size='xs' />}></FormControl.ErrorMessage>
 															</FormControl>
-															<FormControl isRequired isInvalid={!!errors.firstName}>
+															<FormControl
+																isInvalid={errors && errors.experiences && errors.experiences[index].startDate}>
 																<FormControl.Label
 																	_text={{
 																		color: "white",
@@ -282,45 +287,19 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 																	}}>
 																	Start Date
 																</FormControl.Label>
-																<Button
-																	w='100%'
-																	size='lg'
-																	endIcon={<AntDesign name='calendar' size={24} color='white' />}
-																	p={3}
-																	style={{
-																		borderRadius: 10,
-																		shadowColor: "#000",
-																		shadowOffset: {
-																			width: 0,
-																			height: 3,
-																		},
-																		shadowOpacity: 0.29,
-																		shadowRadius: 4.65,
-
-																		elevation: 7,
-																	}}
-																	_text={{
-																		fontWeight: "bold",
-																		fontSize: "md",
-																	}}
-																	bg='#1e2530'
-																	onPress={showCalendar}>
-																	Select start date
-																</Button>
-																{show && (
-																	<DateTimePicker
-																		testID='dateTimePicker'
-																		value={date}
-																		mode={mode}
-																		is24Hour={true}
-																		display='default'
-																		onChange={onChange}
-																	/>
-																)}
-																<FormControl.ErrorMessage
-																	leftIcon={<WarningOutlineIcon size='xs' />}></FormControl.ErrorMessage>
+																<DatePicker
+																	values={values}
+																	fieldName='startDate'
+																	name='start date'
+																	setFieldValue={setFieldValue}
+																	index={index}
+																/>
+																<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+																	{errors && errors.experiences && errors.experiences[index].startDate}
+																</FormControl.ErrorMessage>
 															</FormControl>
-															<FormControl isRequired isInvalid={!!errors.firstName}>
+															<FormControl
+																isInvalid={errors && errors.experiences && errors.experiences[index].endDate}>
 																<FormControl.Label
 																	_text={{
 																		color: "white",
@@ -329,44 +308,22 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 																	}}>
 																	End Date
 																</FormControl.Label>
-																<Button
-																	w='100%'
-																	size='lg'
-																	endIcon={<AntDesign name='calendar' size={24} color='white' />}
-																	p={3}
-																	style={{
-																		borderRadius: 10,
-																		shadowColor: "#000",
-																		shadowOffset: {
-																			width: 0,
-																			height: 3,
-																		},
-																		shadowOpacity: 0.29,
-																		shadowRadius: 4.65,
-
-																		elevation: 7,
-																	}}
-																	_text={{
-																		fontWeight: "bold",
-																		fontSize: "md",
-																	}}
-																	bg='#1e2530'
-																	onPress={showCalendar}>
-																	Select end date
-																</Button>
-																{show && (
-																	<DateTimePicker
-																		testID='dateTimePicker'
-																		value={date}
-																		mode={mode}
-																		is24Hour={true}
-																		display='default'
-																		onChange={onChange}
-																	/>
-																)}
-																<FormControl.ErrorMessage
-																	leftIcon={<WarningOutlineIcon size='xs' />}></FormControl.ErrorMessage>
+																<DatePicker
+																	values={values}
+																	fieldName='endDate'
+																	name='end date'
+																	setFieldValue={setFieldValue}
+																	index={index}
+																/>
+																<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
+																	{errors && errors.experiences && errors.experiences[index].endDate}
+																</FormControl.ErrorMessage>
 															</FormControl>
+															<Checkbox colorScheme='teal' value={""}>
+																<Text fontWeight='bold' fontSize='md' marginLeft={3} color='white'>
+																	I am currently working in this role
+																</Text>
+															</Checkbox>
 														</VStack>
 													</Box>
 												))
@@ -404,7 +361,7 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 													fontSize: "md",
 												}}
 												colorScheme='teal'
-												onPress={() => arrayHelpers.push("")}>
+												onPress={() => arrayHelpers.push({})}>
 												Add a job experience
 											</Button>
 											<Button

@@ -27,3 +27,16 @@ export const employerSignUpSchema = Yup.object().shape({
 		then: Yup.string().oneOf([Yup.ref("password")], "Passwords do not match"),
 	}),
 });
+
+export const jobExperienceSchema = Yup.object({
+	experiences: Yup.array().of(
+		Yup.object().shape({
+			title: Yup.string().required("Job title is required"),
+			companyName: Yup.string().required("Company name is required"),
+			employmentType: Yup.string(),
+			location: Yup.string(),
+			startDate: Yup.date().required("Start date is required"),
+			endDate: Yup.date().required("End date is required"),
+		})
+	),
+});

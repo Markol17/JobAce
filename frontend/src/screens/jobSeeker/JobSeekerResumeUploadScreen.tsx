@@ -110,6 +110,7 @@ export const JobSeekerResumeUploadScreen = (props: any) => {
 						size='lg'
 						endIcon={<AntDesign name='plus' size={26} color='white' />}
 						p={3}
+						colorScheme='teal'
 						style={{
 							borderRadius: 30,
 							shadowColor: "#000",
