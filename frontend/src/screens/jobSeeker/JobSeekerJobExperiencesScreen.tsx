@@ -21,6 +21,7 @@ import { Dimensions } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { jobExperienceSchema } from "../../utils";
 import { DatePicker } from "../../components";
+import { auth } from "../../config";
 
 export const JobSeekerJobExperiencesScreen = (props: any) => {
 	const [show, setShow] = useState(false);
@@ -78,7 +79,7 @@ export const JobSeekerJobExperiencesScreen = (props: any) => {
 						initialValues={{ experiences: [] }}
 						validationSchema={jobExperienceSchema}
 						onSubmit={async (values) => {
-							console.log(values);
+							auth.signInWithEmailAndPassword("test@test.com", "abcdef");
 						}}>
 						{({
 							handleChange,

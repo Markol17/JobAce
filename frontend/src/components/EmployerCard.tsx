@@ -1,22 +1,24 @@
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/core";
-import { Box, Heading, Image, Text, Stack, Badge, Pressable } from "native-base";
-import React from "react";
+import { Video } from "expo-av";
+import { Box, Heading, Image, Text, Stack, Badge } from "native-base";
+import React, { useRef, useState } from "react";
 import { Dimensions, StatusBar } from "react-native";
 
-interface JobSeekerCardProps {
-	firstName: string;
-	lastName: string;
+interface EmployerCardProps {
+	companyName: string;
 	title: string;
 	link: string;
-	bio: string;
+	desc: string;
 	skills: { color: string; name: string }[];
 }
 
-export const JobSeekerCard: React.FC<JobSeekerCardProps> = ({ ...props }) => {
+export const EmployerCard: React.FC<EmployerCardProps> = ({ ...props }) => {
+	const video = useRef<any>(null);
+	const [status, setStatus] = useState<any>({});
 	const navigation = useNavigation();
 	const tabBarHeight = useBottomTabBarHeight();
-	const { firstName, lastName, title, link, bio, skills } = props;
+	const { companyName, title, link, desc, skills } = props;
 
 	const handleProfileClick = () => {
 		//@ts-ignore
@@ -27,13 +29,16 @@ export const JobSeekerCard: React.FC<JobSeekerCardProps> = ({ ...props }) => {
 		//height={Dimensions.get("window").height + StatusBar.currentHeight!}
 		<Box width='100%' height={Dimensions.get("window").height + StatusBar.currentHeight!}>
 			<Box width='100%' height='100%'>
-				<Image
+				<Video
+					ref={video}
+					style={{ width: "100%", height: "100%" }}
 					source={{
 						uri: link,
 					}}
-					size={"100%"}
-					alt='profile picture'
-					resizeMode={"cover"}
+					useNativeControls={false}
+					resizeMode='cover'
+					isLooping
+					onPlaybackStatusUpdate={(status) => setStatus(() => status)}
 				/>
 			</Box>
 			<Box
@@ -48,8 +53,13 @@ export const JobSeekerCard: React.FC<JobSeekerCardProps> = ({ ...props }) => {
 				bottom={0}
 				paddingBottom={tabBarHeight}>
 				<Stack space={3} p='4'>
-					<Heading size='xl' fontFamily='Comfortaa' color='white' fontWeight='bold'>
-						{firstName + " " + lastName}
+					<Heading
+						onPress={() => (status.isPlaying ? video.current!.pauseAsync() : video.current!.playAsync())}
+						size='xl'
+						fontFamily='Comfortaa'
+						color='white'
+						fontWeight='bold'>
+						{companyName}
 					</Heading>
 					<Text fontSize='md' fontFamily='Comfortaa' color='teal.500' fontWeight='semibold' mt='-3'>
 						{title}
@@ -72,13 +82,13 @@ export const JobSeekerCard: React.FC<JobSeekerCardProps> = ({ ...props }) => {
 					</Box>
 					<Text
 						isTruncated
-						noOfLines={2}
+						noOfLines={3}
 						fontSize='sm'
 						fontFamily='Comfortaa'
 						color='gray.400'
 						fontWeight='bold'
 						mt='-1'>
-						{bio}
+						{desc}
 					</Text>
 				</Stack>
 			</Box>
